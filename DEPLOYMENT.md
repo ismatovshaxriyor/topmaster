@@ -129,7 +129,8 @@ nano .env   # SECRET_KEY, POSTGRES_PASSWORD, MINIO_ROOT_PASSWORD ni to'ldiring
 - `SECRET_KEY` — yuqorida yaratilgan satr
 - `POSTGRES_PASSWORD` — kuchli parol
 - `MINIO_ROOT_PASSWORD` — kuchli parol
-- `ALLOWED_HOSTS=topmaster.ismatov.uz` (allaqachon shunday)
+- `ALLOWED_HOSTS=topmaster.ismatov.uz,localhost,127.0.0.1` (localhost — ichki
+  healthcheck uchun zarur; shablonda allaqachon shunday)
 
 > `.env` hech qachon git'ga tushmaydi (`.gitignore`da).
 
