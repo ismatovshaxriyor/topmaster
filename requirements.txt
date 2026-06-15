@@ -1,0 +1,44 @@
+# ── Core ──────────────────────────────────────────────────────────
+Django==5.1.4
+django-jazzmin==3.0.1
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.6.0
+django-filter==24.3
+drf-spectacular==0.28.0
+django-environ==0.11.2
+
+# ── Database ──────────────────────────────────────────────────────
+psycopg[binary]==3.2.3
+
+# ── Real-time (WebSocket) ─────────────────────────────────────────
+channels==4.2.0
+channels-redis==4.2.1
+daphne==4.1.2
+
+# ── Async tasks ───────────────────────────────────────────────────
+celery==5.4.0
+redis==5.2.1
+django-celery-beat==2.7.0
+django-celery-results==2.5.1
+
+# ── Files / storage (MinIO, S3-compatible) ────────────────────────
+django-storages==1.14.4
+boto3==1.35.80
+Pillow==11.0.0
+
+# ── Push notifications (Firebase FCM) ─────────────────────────────
+firebase-admin==6.6.0
+
+# ── ASGI / HTTP server ────────────────────────────────────────────
+uvicorn[standard]==0.34.0
+gunicorn==23.0.0
+
+# ── Static file serving (under ASGI/uvicorn, dev + prod) ──────────
+whitenoise[brotli]==6.8.2
+
+# ── Audit log (who changed what — admin + API) ────────────────────
+django-auditlog==3.0.0
+
+# ── Misc ──────────────────────────────────────────────────────────
+python-slugify==8.0.4

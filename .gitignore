@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Django
+*.log
+staticfiles/
+media/
+db.sqlite3
+
+# Env / secrets
+.env
+.env.prod
+.env.*.local
+firebase-credentials.json
+*.pem
+
+# Deploy: TLS certs + ACME challenge (generated on the server)
+deploy/certbot/conf/
+deploy/certbot/www/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

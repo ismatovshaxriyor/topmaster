@@ -1,0 +1,59 @@
+{% extends "admin/change_form.html" %}
+{% comment %}
+Adds a Leaflet (OpenStreetMap) location picker to any admin change form that
+has `latitude` / `longitude` fields. Click the map (or drag the marker) to fill
+the two coordinate inputs; editing the inputs moves the marker. No API key.
+{% endcomment %}
+{% block extrahead %}{{ block.super }}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJ8AqIdj/B+W3pFsuM2c4HYZH+UE3=" crossorigin=""></script>
+<style>
+  #tm-map { height: 360px; border-radius: 10px; margin: 6px 0 4px; border: 1px solid #d9dde3; }
+  .tm-map-hint { color: #6b7280; font-size: 12px; margin: 0 0 14px; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var lat = document.getElementById('id_latitude');
+  var lng = document.getElementById('id_longitude');
+  if (!lat || !lng || typeof L === 'undefined') return;
+
+  // Insert the map + hint right after the longitude field's row.
+  var anchor = lng.closest('.form-row, .form-group, .row, fieldset div') || lng.parentNode;
+  var box = document.createElement('div'); box.id = 'tm-map';
+  var hint = document.createElement('p'); hint.className = 'tm-map-hint';
+  hint.textContent = 'Joylashuvni belgilash uchun xaritani bosing yoki markerni suring.';
+  anchor.parentNode.insertBefore(hint, anchor.nextSibling);
+  anchor.parentNode.insertBefore(box, hint);
+
+  var dlat = parseFloat(lat.value), dlng = parseFloat(lng.value);
+  var has = !isNaN(dlat) && !isNaN(dlng);
+  var center = has ? [dlat, dlng] : [41.3111, 69.2797]; // Toshkent fallback
+
+  var map = L.map('tm-map').setView(center, has ? 13 : 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  var marker = L.marker(center, { draggable: true }).addTo(map);
+
+  function setInputs(ll) {
+    lat.value = ll.lat.toFixed(6);
+    lng.value = ll.lng.toFixed(6);
+  }
+  marker.on('dragend', function (e) { setInputs(e.target.getLatLng()); });
+  map.on('click', function (e) { marker.setLatLng(e.latlng); setInputs(e.latlng); });
+
+  function syncFromInputs() {
+    var a = parseFloat(lat.value), b = parseFloat(lng.value);
+    if (!isNaN(a) && !isNaN(b)) { var ll = L.latLng(a, b); marker.setLatLng(ll); map.panTo(ll); }
+  }
+  lat.addEventListener('change', syncFromInputs);
+  lng.addEventListener('change', syncFromInputs);
+
+  // Tiles can render blank when the map is laid out inside an animated card.
+  setTimeout(function () { map.invalidateSize(); }, 250);
+});
+</script>
+{% endblock %}

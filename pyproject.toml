@@ -1,0 +1,31 @@
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+extend-exclude = "migrations"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "DJ", "PIE", "SIM"]
+ignore = [
+    "E501",   # line length handled by black
+    "B008",   # function calls in arg defaults (DRF/Django common)
+    "DJ001",  # null=True on string fields (we use it intentionally in places)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"*/settings/*.py" = ["F403", "F405"]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+addopts = "--reuse-db --tb=short"
+testpaths = ["apps"]
+filterwarnings = ["ignore::DeprecationWarning"]

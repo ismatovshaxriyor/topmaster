@@ -1,0 +1,17 @@
+.git
+.gitignore
+*.md
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.ruff_cache
+.mypy_cache
+htmlcov
+.coverage
+staticfiles
+media
+.env.example
+.DS_Store
