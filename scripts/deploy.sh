@@ -39,3 +39,5 @@ docker image prune -f >/dev/null
 
 echo "✓ Deploy complete."
 $COMPOSE ps
+
+# CI/CD smoke test — verifying the GitHub Actions → EC2 pipeline end-to-end.
