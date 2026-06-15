@@ -70,7 +70,7 @@ def nearby_parameters():
     return [
         OpenApiParameter(
             "lat", OpenApiTypes.FLOAT, OpenApiParameter.QUERY,
-            description="Qidiruv markazi — kenglik (masofa boʻyicha saralash uchun).",
+            description="Qidiruv markazi — kenglik (masofa bo'yicha saralash uchun).",
         ),
         OpenApiParameter(
             "lng", OpenApiTypes.FLOAT, OpenApiParameter.QUERY,

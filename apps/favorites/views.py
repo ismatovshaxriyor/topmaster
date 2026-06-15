@@ -61,7 +61,7 @@ class SavedMasterViewSet(viewsets.ModelViewSet):
             name="SavedIdsResponse",
             fields={"ids": serializers.ListField(child=serializers.IntegerField())},
         ),
-        description="Saqlangan ustalar identifikatorlari roʻyxati.",
+        description="Saqlangan ustalar identifikatorlari ro'yxati.",
     )
     @action(detail=False, methods=["get"])
     def ids(self, request):

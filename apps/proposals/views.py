@@ -30,7 +30,7 @@ from .serializers import ProposalCreateSerializer, ProposalSerializer
                 OpenApiTypes.INT,
                 OpenApiParameter.QUERY,
                 required=False,
-                description="Buyurtma IDsi boʻyicha filtrlash",
+                description="Buyurtma IDsi bo'yicha filtrlash",
             ),
         ],
     ),
@@ -115,7 +115,7 @@ class ProposalViewSet(ModelViewSet):
             raise PermissionDenied("Faqat buyurtma egasi taklifni qabul qila oladi.")
         if job.status != JobStatus.OPEN:
             raise ValidationError(
-                {"job": "Bu buyurtma uchun taklif qabul qilib boʻlmaydi."}
+                {"job": "Bu buyurtma uchun taklif qabul qilib bo'lmaydi."}
             )
         if proposal.status != Proposal.Status.PENDING:
             raise ValidationError({"status": "Bu taklif kutilayotgan holatda emas."})
@@ -147,7 +147,7 @@ class ProposalViewSet(ModelViewSet):
             proposal.master.user,
             type="accepted",
             title="Taklifingiz qabul qilindi",
-            body=f"\"{job.title}\" buyurtmasi boʻyicha taklifingiz qabul qilindi.",
+            body=f"\"{job.title}\" buyurtmasi bo'yicha taklifingiz qabul qilindi.",
             data={"job_id": job.id, "proposal_id": proposal.id},
         )
 
@@ -174,7 +174,7 @@ class ProposalViewSet(ModelViewSet):
             proposal.master.user,
             type="rejected",
             title="Taklifingiz rad etildi",
-            body=f"\"{job.title}\" buyurtmasi boʻyicha taklifingiz rad etildi.",
+            body=f"\"{job.title}\" buyurtmasi bo'yicha taklifingiz rad etildi.",
             data={"job_id": job.id, "proposal_id": proposal.id},
         )
 

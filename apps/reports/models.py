@@ -23,7 +23,7 @@ class Report(TimeStampedModel):
 
     class Status(models.TextChoices):
         OPEN = "open", "Yangi"
-        REVIEWING = "reviewing", "Koʻrib chiqilmoqda"
+        REVIEWING = "reviewing", "Ko'rib chiqilmoqda"
         RESOLVED = "resolved", "Hal qilindi"
         DISMISSED = "dismissed", "Rad etildi"
 

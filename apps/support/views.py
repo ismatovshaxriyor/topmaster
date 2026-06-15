@@ -36,7 +36,7 @@ class FaqTopicListAPIView(ListAPIView):
             type=OpenApiTypes.STR,
             location=OpenApiParameter.QUERY,
             required=False,
-            description="Mavzu kaliti (key) boʻyicha filtrlash",
+            description="Mavzu kaliti (key) bo'yicha filtrlash",
         )
     ],
 )
@@ -123,4 +123,4 @@ class SupportChatViewSet(viewsets.GenericViewSet):
         if thread is not None:
             services.mark_staff_messages_read(thread)
             return Response(SupportThreadSerializer(thread).data)
-        return Response({"detail": "Faol suhbat yoʻq."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"detail": "Faol suhbat yo'q."}, status=status.HTTP_404_NOT_FOUND)

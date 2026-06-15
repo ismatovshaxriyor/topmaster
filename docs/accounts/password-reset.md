@@ -12,7 +12,7 @@
 
 ## Tavsif
 
-Foydalanuvchi emailiga parol tiklash havolasini yuboradi. Email ma'lumotlar bazasida mavjud bo'lmasa ham har doim `200` qaytariladi — bu email manzillarini sanab chiqish (enumeration) hujumlarini oldini oladi. Agar hisob topilsa, `uid` (Base64 kodlangan `pk`) va `token` (Django standart token generatori) o'z ichiga olgan deep-link email orqali yuboriladi. Havola `settings.FRONTEND_PASSWORD_RESET_URL` ga yo'naltiriladi.
+Foydalanuvchi emailiga parol tiklash uchun **6 xonali kod** yuboradi. Email ma'lumotlar bazasida mavjud bo'lmasa ham har doim `200` qaytariladi — bu email manzillarini sanab chiqish (enumeration) hujumlarini oldini oladi. Agar hisob topilsa, kod generatsiya qilinib cache'da **15 daqiqa** saqlanadi va brendlangan HTML email orqali yuboriladi (Celery, async). Kod bilan tiklashni yakunlash uchun `POST /auth/password/reset/confirm/` ga murojaat qiling.
 
 ## So'rov
 
@@ -36,13 +36,11 @@ Yo'q.
 
 ```json
 {
-  "detail": "Agar hisob mavjud bo'lsa, ko'rsatmalar yuborildi."
+  "detail": "Agar hisob mavjud bo'lsa, kod yuborildi."
 }
 ```
 
-Email hisob mavjud bo'lganda quyidagi ma'lumotlarni o'z ichiga oladi:
-- To'g'ridan-to'g'ri deep-link: `{FRONTEND_PASSWORD_RESET_URL}?uid=<uid>&token=<token>`
-- Ilovada qo'lda kiritish uchun `uid` va `token` alohida ko'rsatiladi
+Hisob mavjud bo'lganda emailga 6 xonali kod yuboriladi (15 daqiqa amal qiladi).
 
 ### Xato javoblari
 

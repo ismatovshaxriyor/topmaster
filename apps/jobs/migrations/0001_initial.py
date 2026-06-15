@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                     "price_amount",
                     models.PositiveIntegerField(
                         blank=True,
-                        help_text="Mijoz taklif qilgan byudjet (soʻm) — faqat maʼlumot.",
+                        help_text="Mijoz taklif qilgan byudjet (so'm) — faqat maʼlumot.",
                         null=True,
                     ),
                 ),

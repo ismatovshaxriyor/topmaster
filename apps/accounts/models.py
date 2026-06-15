@@ -24,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
 
     email = models.EmailField("email", unique=True)
-    full_name = models.CharField("toʻliq ism", max_length=150, blank=True)
+    full_name = models.CharField("to'liq ism", max_length=150, blank=True)
     phone = models.CharField("telefon", max_length=32, blank=True)
     city = models.ForeignKey(
         "catalog.City",
@@ -76,7 +76,7 @@ class UserSettings(TimeStampedModel):
     """Notification + appearance preferences (Account → Sozlamalar)."""
 
     class Language(models.TextChoices):
-        UZ = "uz", "Oʻzbekcha"
+        UZ = "uz", "O'zbekcha"
         RU = "ru", "Русский"
         EN = "en", "English"
 

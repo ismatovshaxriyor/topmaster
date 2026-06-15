@@ -1,38 +1,38 @@
-# Xizmat kategoriyalari roʻyxati
+# Xizmat kategoriyalari ro'yxati
 
 `GET /api/v1/catalog/categories/`
 
-| | |
-|---|---|
-| **Boʻlim** | Catalog |
+|                      |                    |
+| -------------------- | ------------------ |
+| **Bo'lim**           | Catalog            |
 | **Autentifikatsiya** | Ommaviy (AllowAny) |
-| **Ruxsat** | Hamma |
-| **Sahifalash** | Ha |
-| **Throttle** | Yoʻq |
+| **Ruxsat**           | Hamma              |
+| **Sahifalash**       | Ha                 |
+| **Throttle**         | Yo'q               |
 
 ## Tavsif
 
-Faol xizmat yoʻnalishlari (kategoriyalar) roʻyxatini qaytaradi. Faqat
-`is_active=True` boʻlgan yozuvlar chiqariladi — nofaol kategoriyalar
-filtrdan oʻtkaziladi. Kategoriyalar `order` boʻyicha, soʻngra `label`
-boʻyicha tartiblangan. `icon` maydoni frontend tomonida Lucide ikonkasining
+Faol xizmat yo'nalishlari (kategoriyalar) ro'yxatini qaytaradi. Faqat
+`is_active=True` bo'lgan yozuvlar chiqariladi — nofaol kategoriyalar
+filtrdan o'tkaziladi. Kategoriyalar `order` bo'yicha, so'ngra `label`
+bo'yicha tartiblangan. `icon` maydoni frontend tomonida Lucide ikonkasining
 nomini saqlaydi.
 
-## Soʻrov
+## So'rov
 
 ### Path parametrlari
 
-Yoʻq.
+Yo'q.
 
 ### Query parametrlari
 
-| Parametr | Tur | Majburiy | Tavsif |
-|---|---|---|---|
-| `page` | integer | Yoʻq | Sahifa raqami (standart: 1) |
+| Parametr | Tur     | Majburiy | Tavsif                      |
+| -------- | ------- | -------- | --------------------------- |
+| `page`   | integer | Yo'q     | Sahifa raqami (standart: 1) |
 
 ### Tana (request body)
 
-Yoʻq.
+Yo'q.
 
 ## Javob
 
@@ -66,18 +66,18 @@ Yoʻq.
 }
 ```
 
-| Maydon | Tur | Tavsif |
-|---|---|---|
-| `id` | integer | Kategoriyaga unikal identifikator |
-| `key` | string | Slug-formatdagi texnik kalit (unikal); filter va routing uchun ishlatiladi |
-| `label` | string | Foydalanuvchiga koʻrsatiladigan nom |
-| `icon` | string | Lucide ikonka nomi (frontend uchun) |
+| Maydon  | Tur     | Tavsif                                                                     |
+| ------- | ------- | -------------------------------------------------------------------------- |
+| `id`    | integer | Kategoriyaga unikal identifikator                                          |
+| `key`   | string  | Slug-formatdagi texnik kalit (unikal); filter va routing uchun ishlatiladi |
+| `label` | string  | Foydalanuvchiga ko'rsatiladigan nom                                        |
+| `icon`  | string  | Lucide ikonka nomi (frontend uchun)                                        |
 
 ### Xato javoblari
 
-| Kod | Sabab |
-|---|---|
-| `404` | Koʻrsatilgan sahifa mavjud emas |
+| Kod   | Sabab                           |
+| ----- | ------------------------------- |
+| `404` | Ko'rsatilgan sahifa mavjud emas |
 
 ## Misol
 

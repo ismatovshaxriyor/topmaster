@@ -33,3 +33,6 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Local email previews
+email-preview/

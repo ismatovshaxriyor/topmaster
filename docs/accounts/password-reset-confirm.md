@@ -12,7 +12,7 @@
 
 ## Tavsif
 
-`uid` va `token` (email orqali olingan) ni tekshirib, yangi parol o'rnatadi. `uid` noto'g'ri yoki `token` yaroqsiz/muddati o'tgan bo'lsa, xuddi bir xil xato qaytariladi — token yoki `uid` dan qaysi biri noto'g'ri ekanligi oshkor qilinmaydi. Muvaffaqiyatli so'rovdan so'ng xavfsizlik maqsadida foydalanuvchining barcha mavjud refresh tokenlari blacklist'ga qo'shiladi (barcha qurilmalardagi sessiyalar bekor qilinadi).
+Email manzil va emailga yuborilgan **6 xonali kod**ni tekshirib, yangi parol o'rnatadi. Kod noto'g'ri yoki muddati o'tgan bo'lsa `400` qaytariladi. Muvaffaqiyatli so'rovdan so'ng xavfsizlik maqsadida foydalanuvchining barcha mavjud refresh tokenlari blacklist'ga qo'shiladi (barcha qurilmalardagi sessiyalar bekor qilinadi) va kod cache'dan o'chiriladi.
 
 ## So'rov
 
@@ -28,8 +28,8 @@ Yo'q.
 
 | Maydon | Tur | Majburiy | Tavsif |
 |---|---|---|---|
-| `uid` | string | Ha | Emaildagi Base64 kodlangan foydalanuvchi `pk` |
-| `token` | string | Ha | Emaildagi Django token generatori tomonidan yaratilgan token |
+| `email` | string (email) | Ha | Hisob email manzili |
+| `code` | string | Ha | Emailga yuborilgan 6 xonali kod |
 | `new_password` | string | Ha | Yangi parol — Django parol validatsiyasidan o'tadi |
 
 ## Javob
@@ -48,7 +48,7 @@ Yon ta'sir: foydalanuvchining barcha mavjud `OutstandingToken` lari `Blacklisted
 
 | Kod | Sabab |
 |---|---|
-| `400` | `uid` noto'g'ri; `token` yaroqsiz yoki muddati o'tgan; `new_password` validatsiya talablarini qondirmaydi; majburiy maydon yo'q |
+| `400` | Kod noto'g'ri yoki muddati o'tgan; `new_password` validatsiya talablarini qondirmaydi; majburiy maydon yo'q |
 | `429` | Throttle limiti oshildi (5 so'rov/daqiqa) |
 
 ## Misol
@@ -57,8 +57,8 @@ Yon ta'sir: foydalanuvchining barcha mavjud `OutstandingToken` lari `Blacklisted
 curl -X POST "http://localhost:8000/api/v1/auth/password/reset/confirm/" \
   -H "Content-Type: application/json" \
   -d '{
-    "uid": "NDI",
-    "token": "bff07c-a1b2c3d4e5f6...",
+    "email": "jasur@example.com",
+    "code": "482913",
     "new_password": "YangiXavsizParol2025!"
   }'
 ```

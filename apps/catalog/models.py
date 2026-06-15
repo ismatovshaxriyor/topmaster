@@ -1,4 +1,4 @@
-"""Reference data: cities (shaharlar) and service categories (yoʻnalishlar)."""
+"""Reference data: cities (shaharlar) and service categories (yo'nalishlar)."""
 from django.db import models
 
 
@@ -23,7 +23,7 @@ class City(models.Model):
 
 
 class Category(models.Model):
-    """A trade / service direction (yoʻnalish): Elektrik, Santexnik, …
+    """A trade / service direction (yo'nalish): Elektrik, Santexnik, …
 
     `icon` stores a Lucide icon name used by the frontend.
     """

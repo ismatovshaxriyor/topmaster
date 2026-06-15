@@ -1,7 +1,5 @@
 """Accounts views: auth, profile, settings, password, devices."""
-import contextlib
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from drf_spectacular.utils import (
@@ -18,7 +16,6 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from apps.common.email import send_html_email
 from apps.common.throttles import (
     EmailVerifyRateThrottle,
     LoginRateThrottle,
@@ -101,7 +98,7 @@ class LogoutView(APIView):
             RefreshToken(refresh).blacklist()
         except TokenError:
             return Response(
-                {"detail": "Token yaroqsiz yoki muddati oʻtgan."},
+                {"detail": "Token yaroqsiz yoki muddati o'tgan."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(status=status.HTTP_205_RESET_CONTENT)
@@ -153,7 +150,7 @@ class ChangePasswordView(APIView):
 
 @extend_schema(tags=["Auth & Accounts"])
 class PasswordResetRequestView(APIView):
-    """Request a password reset link. Always returns 200 (no email leak)."""
+    """Request a password-reset code by email. Always returns 200 (no leak)."""
 
     serializer_class = PasswordResetRequestSerializer
     permission_classes = [AllowAny]
@@ -161,7 +158,7 @@ class PasswordResetRequestView(APIView):
 
     @extend_schema(
         request=PasswordResetRequestSerializer,
-        responses={200: OpenApiResponse(description="Soʻrov qabul qilindi.")},
+        responses={200: OpenApiResponse(description="So'rov qabul qilindi.")},
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -169,29 +166,17 @@ class PasswordResetRequestView(APIView):
         email = serializer.validated_data["email"]
         user = User.objects.filter(email__iexact=email, is_active=True).first()
         if user is not None:
-            from django.contrib.auth.tokens import default_token_generator
-            from django.utils.encoding import force_bytes
-            from django.utils.http import urlsafe_base64_encode
+            from .tasks import send_password_reset_code
 
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
-            reset_link = f"{settings.FRONTEND_PASSWORD_RESET_URL}?uid={uid}&token={token}"
-            # Never surface delivery errors to the caller (no account enumeration).
-            with contextlib.suppress(Exception):
-                send_html_email(
-                    "TopMaster: parolni tiklash",
-                    user.email,
-                    "password_reset",
-                    {"reset_link": reset_link, "uid": uid, "token": token},
-                )
+            send_password_reset_code.delay(user.id)
         return Response(
-            {"detail": "Agar hisob mavjud boʻlsa, koʻrsatmalar yuborildi."}
+            {"detail": "Agar hisob mavjud bo'lsa, kod yuborildi."}
         )
 
 
 @extend_schema(tags=["Auth & Accounts"])
 class PasswordResetConfirmView(APIView):
-    """Complete a password reset: verify uid+token and set the new password."""
+    """Complete a password reset: verify the emailed code and set the new password."""
 
     serializer_class = PasswordResetConfirmSerializer
     permission_classes = [AllowAny]
@@ -199,7 +184,7 @@ class PasswordResetConfirmView(APIView):
 
     @extend_schema(
         request=PasswordResetConfirmSerializer,
-        responses={200: OpenApiResponse(description="Parol oʻzgartirildi.")},
+        responses={200: OpenApiResponse(description="Parol o'zgartirildi.")},
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -217,7 +202,7 @@ class PasswordResetConfirmView(APIView):
                 BlacklistedToken.objects.get_or_create(token=outstanding)
         except Exception:  # blacklist app issues must not block the reset
             pass
-        return Response({"detail": "Parol muvaffaqiyatli oʻzgartirildi."})
+        return Response({"detail": "Parol muvaffaqiyatli o'zgartirildi."})
 
 
 @extend_schema(tags=["Auth & Accounts"])
@@ -251,7 +236,7 @@ class VerifyEmailView(APIView):
         cached = cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id)) if user else None
         if user is None or not cached or cached != code:
             return Response(
-                {"code": "Kod notoʻgʻri yoki muddati oʻtgan."},
+                {"code": "Kod noto'g'ri yoki muddati o'tgan."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -282,7 +267,7 @@ class ResendVerificationView(APIView):
 
     @extend_schema(
         request=ResendVerificationSerializer,
-        responses={200: OpenApiResponse(description="Kod yuborildi (agar kerak boʻlsa).")},
+        responses={200: OpenApiResponse(description="Kod yuborildi (agar kerak bo'lsa).")},
     )
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -294,7 +279,7 @@ class ResendVerificationView(APIView):
 
             send_email_verification_code.delay(user.id)
         return Response(
-            {"detail": "Agar hisob mavjud va tasdiqlanmagan boʻlsa, kod yuborildi."}
+            {"detail": "Agar hisob mavjud va tasdiqlanmagan bo'lsa, kod yuborildi."}
         )
 
 

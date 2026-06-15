@@ -33,13 +33,13 @@ class Migration(migrations.Migration):
                 (
                     "min_price",
                     models.PositiveIntegerField(
-                        default=0, help_text="Minimal buyurtma narxi (soʻm)."
+                        default=0, help_text="Minimal buyurtma narxi (so'm)."
                     ),
                 ),
                 (
                     "status",
                     models.CharField(
-                        choices=[("free", "Boʻsh"), ("busy", "Band"), ("off", "Faol emas")],
+                        choices=[("free", "Bo'sh"), ("busy", "Band"), ("off", "Faol emas")],
                         default="free",
                         max_length=8,
                     ),
@@ -223,7 +223,7 @@ class Migration(migrations.Migration):
                             ("id", "Pasport / ID karta"),
                             ("selfie", "Selfi tekshiruvi"),
                             ("diploma", "Diplom / Sertifikat"),
-                            ("address", "Manzil tasdigʻi"),
+                            ("address", "Manzil tasdig'i"),
                         ],
                         max_length=10,
                     ),

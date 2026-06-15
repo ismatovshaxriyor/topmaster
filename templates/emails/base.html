@@ -1,44 +1,128 @@
-{% comment %}Branded transactional email shell. Email-safe: tables + inline styles.
-Brand: Ishonch Navy (#1B4965) + Hunar Orange (#F4A259). Child templates fill {% block content %}.{% endcomment %}<!DOCTYPE html>
+{% comment %}Branded transactional email shell. Email-safe: tables + inline
+styles. Brand: Ishonch Navy (#1B4965) + Hunar Orange (#F4A259). Child templates
+fill {% block content %}.{% endcomment %}<!doctype html>
 <html lang="uz">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="x-apple-disable-message-reformatting">
-  <title>TopMaster</title>
-</head>
-<body style="margin:0;padding:0;background:#F8F8F6;-webkit-font-smoothing:antialiased;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F8F8F6;">
-    <tr>
-      <td align="center" style="padding:32px 16px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#FFFFFF;border-radius:16px;overflow:hidden;border:1px solid #E4E3DD;">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <title>TopMaster</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background: #f8f8f6;
+      -webkit-font-smoothing: antialiased;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="background: #f8f8f6"
+    >
+      <tr>
+        <td align="center" style="padding: 32px 16px">
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              max-width: 520px;
+              background: #ffffff;
+              border-radius: 16px;
+              overflow: hidden;
+              border: 1px solid #e4e3dd;
+            "
+          >
+            <!-- ── Header ── -->
+            <tr>
+              <td style="background: #1b4965; padding: 24px 32px">
+                <img
+                  src="https://topmaster.ismatov.uz/static/email/logo-mark.png"
+                  width="34"
+                  alt=""
+                  style="
+                    height: auto;
+                    vertical-align: middle;
+                    border: 0;
+                    outline: none;
+                    text-decoration: none;
+                  "
+                /><span
+                  style="
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 13px;
+                    font-family:
+                      &quot;Hanken Grotesk&quot;, Arial, Helvetica, sans-serif;
+                    font-size: 23px;
+                    font-weight: 800;
+                    letter-spacing: -0.5px;
+                    color: #ffffff;
+                  "
+                  >Top<span style="color: #f4a259">Master</span></span
+                >
+              </td>
+            </tr>
 
-          <!-- ── Header ── -->
-          <tr>
-            <td style="background:#1B4965;padding:26px 32px;">
-              <span style="display:inline-block;width:15px;height:15px;border:3px solid #F4A259;border-radius:5px;vertical-align:middle;"></span><span style="display:inline-block;width:15px;height:15px;border:3px solid #FFFFFF;border-radius:5px;vertical-align:middle;margin-left:-7px;"></span><span style="display:inline-block;vertical-align:middle;margin-left:12px;font-family:'Hanken Grotesk',Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#FFFFFF;">Top<span style="color:#F4A259;">Master</span></span>
-            </td>
-          </tr>
+            <!-- ── Body ── -->
+            <tr>
+              <td
+                style="
+                  padding: 34px 32px;
+                  font-family: Arial, Helvetica, sans-serif;
+                  color: #48473f;
+                  font-size: 15px;
+                  line-height: 1.65;
+                "
+              >
+                {% block content %}{% endblock %}
+              </td>
+            </tr>
 
-          <!-- ── Body ── -->
-          <tr>
-            <td style="padding:34px 32px;font-family:Arial,Helvetica,sans-serif;color:#48473F;font-size:15px;line-height:1.65;">
-              {% block content %}{% endblock %}
-            </td>
-          </tr>
-
-          <!-- ── Footer ── -->
-          <tr>
-            <td style="padding:20px 32px;background:#F8F8F6;border-top:1px solid #E4E3DD;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#807E74;">
-              <p style="margin:0;">TopMaster — Oʻzbekiston usta va mutaxassislar platformasi.</p>
-              <p style="margin:6px 0 0;">Bu avtomatik xat, iltimos javob bermang.</p>
-            </td>
-          </tr>
-
-        </table>
-        <p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#A8A69C;margin:16px 0 0;">© TopMaster · <a href="https://topmaster.ismatov.uz" style="color:#A8A69C;text-decoration:underline;">topmaster.ismatov.uz</a></p>
-      </td>
-    </tr>
-  </table>
-</body>
+            <!-- ── Footer ── -->
+            <tr>
+              <td
+                style="
+                  padding: 20px 32px;
+                  background: #f8f8f6;
+                  border-top: 1px solid #e4e3dd;
+                  font-family: Arial, Helvetica, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #807e74;
+                "
+              >
+                <p style="margin: 0">
+                  TopMaster — O'zbekiston usta va mutaxassislar platformasi.
+                </p>
+                <p style="margin: 6px 0 0">
+                  Bu avtomatik xat, iltimos javob bermang.
+                </p>
+              </td>
+            </tr>
+          </table>
+          <p
+            style="
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 11px;
+              color: #a8a69c;
+              margin: 16px 0 0;
+            "
+          >
+            © TopMaster ·
+            <a
+              href="https://topmaster.ismatov.uz"
+              style="color: #a8a69c; text-decoration: underline"
+              >topmaster.ismatov.uz</a
+            >
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>

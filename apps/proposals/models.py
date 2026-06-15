@@ -17,7 +17,7 @@ class Proposal(TimeStampedModel):
     )
     message = models.TextField(blank=True)
     proposed_price = models.PositiveIntegerField(
-        null=True, blank=True, help_text="Usta taklif qilgan narx (soʻm) — faqat maʼlumot."
+        null=True, blank=True, help_text="Usta taklif qilgan narx (so'm) — faqat maʼlumot."
     )
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
     responded_at = models.DateTimeField(null=True, blank=True)

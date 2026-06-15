@@ -38,7 +38,7 @@ from .serializers import (
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
                 required=False,
-                description="Toʻliq matnli qidiruv (sarlavha + tavsif boʻyicha, ahamiyat tartibida).",
+                description="To'liq matnli qidiruv (sarlavha + tavsif bo'yicha, ahamiyat tartibida).",
             ),
             *nearby_parameters(),
         ]
@@ -213,7 +213,7 @@ class JobViewSet(viewsets.ModelViewSet):
         """Client cancels the job (only while not yet completed)."""
         job = self._get_owned_job()
         if job.status == JobStatus.COMPLETED:
-            raise ValidationError("Yakunlangan buyurtmani bekor qilib boʻlmaydi.")
+            raise ValidationError("Yakunlangan buyurtmani bekor qilib bo'lmaydi.")
         if job.status == JobStatus.CANCELLED:
             raise ValidationError("Buyurtma allaqachon bekor qilingan.")
         job.status = JobStatus.CANCELLED

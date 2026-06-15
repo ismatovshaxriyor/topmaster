@@ -65,4 +65,4 @@ class VerificationRequestAdmin(admin.ModelAdmin):
             master = vreq.master
             master.is_verified = True
             master.save(update_fields=["is_verified", "updated_at"])
-        self.message_user(request, f"{queryset.count()} ta soʻrov tasdiqlandi.")
+        self.message_user(request, f"{queryset.count()} ta so'rov tasdiqlandi.")

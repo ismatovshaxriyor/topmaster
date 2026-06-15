@@ -58,7 +58,7 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
         job_id = ser.validated_data.get("job")
 
         if other_id == request.user.id:
-            raise ValidationError("Oʻzingiz bilan suhbat ochib boʻlmaydi.")
+            raise ValidationError("O'zingiz bilan suhbat ochib bo'lmaydi.")
         try:
             other = User.objects.get(pk=other_id)
         except User.DoesNotExist:

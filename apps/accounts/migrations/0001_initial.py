@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ("email", models.EmailField(max_length=254, unique=True, verbose_name="email")),
                 (
                     "full_name",
-                    models.CharField(blank=True, max_length=150, verbose_name="toʻliq ism"),
+                    models.CharField(blank=True, max_length=150, verbose_name="to'liq ism"),
                 ),
                 ("phone", models.CharField(blank=True, max_length=32, verbose_name="telefon")),
                 (
@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
                 (
                     "language",
                     models.CharField(
-                        choices=[("uz", "Oʻzbekcha"), ("ru", "Русский"), ("en", "English")],
+                        choices=[("uz", "O'zbekcha"), ("ru", "Русский"), ("en", "English")],
                         default="uz",
                         max_length=2,
                     ),

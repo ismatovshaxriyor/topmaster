@@ -52,7 +52,7 @@ class ReportSerializer(serializers.ModelSerializer):
             ct = ContentType.objects.get(app_label=app_label, model=model)
         except ContentType.DoesNotExist:
             raise serializers.ValidationError(
-                {"target_type": "Notoʻgʻri obyekt turi."}
+                {"target_type": "Noto'g'ri obyekt turi."}
             ) from None
         model_cls = ct.model_class()
         if model_cls is None or not model_cls.objects.filter(pk=target_id).exists():

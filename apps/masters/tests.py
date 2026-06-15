@@ -140,7 +140,7 @@ def test_create_skill(client_api, master_user, master_profile):
     client_api.force_authenticate(master_user)
     resp = client_api.post(
         "/api/v1/masters/me/skills/",
-        {"title": "Rozetka oʻrnatish", "price_min": 50000, "years": 3},
+        {"title": "Rozetka o'rnatish", "price_min": 50000, "years": 3},
         format="json",
     )
     assert resp.status_code == 201

@@ -129,7 +129,7 @@ _CHAT_SCRIPT = r"""
   function load(){
     fetch(URL+'?after='+last,{credentials:'same-origin'}).then(function(r){return r.json();}).then(function(d){
       var msgs=d.messages||[];
-      if(first){ box.innerHTML=''; if(!msgs.length){box.innerHTML='<em style="opacity:.6">Hali xabar yoʻq.</em>';} }
+      if(first){ box.innerHTML=''; if(!msgs.length){box.innerHTML='<em style="opacity:.6">Hali xabar yo'q.</em>';} }
       if(msgs.length){
         var stick=first||nearBottom();
         msgs.forEach(function(m){box.insertAdjacentHTML('beforeend',bubble(m)); if(m.id>last)last=m.id;});
@@ -147,8 +147,8 @@ _CHAT_SCRIPT = r"""
     });
     var canned=['Assalomu alaykum! Sizga qanday yordam bera olaman?',
       'Murojaatingiz uchun rahmat, tez orada hal qilamiz.',
-      'Buyurtmangiz koʻrib chiqilmoqda.',
-      'Yana savolingiz boʻlsa, bemalol yozing.'];
+      'Buyurtmangiz ko'rib chiqilmoqda.',
+      'Yana savolingiz bo'lsa, bemalol yozing.'];
     var bar=document.createElement('div'); bar.style.cssText='margin:8px 0 4px;display:flex;gap:6px;flex-wrap:wrap';
     canned.forEach(function(t){var b=document.createElement('button'); b.type='button'; b.title=t;
       b.textContent=t.length>30?t.slice(0,30)+'…':t;

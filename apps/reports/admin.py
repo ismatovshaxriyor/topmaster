@@ -110,10 +110,10 @@ class ReportAdmin(admin.ModelAdmin):
                 obj.resolved_at = obj.resolved_at or timezone.now()
         super().save_model(request, obj, form, change)
 
-    @admin.action(description="Koʻrib chiqilmoqda deb belgilash")
+    @admin.action(description="Ko'rib chiqilmoqda deb belgilash")
     def mark_reviewing(self, request, queryset):
         n = queryset.update(status=Report.Status.REVIEWING, handled_by=request.user)
-        self.message_user(request, f"{n} ta shikoyat koʻrib chiqilmoqda.")
+        self.message_user(request, f"{n} ta shikoyat ko'rib chiqilmoqda.")
 
     @admin.action(description="Hal qilindi deb belgilash")
     def mark_resolved(self, request, queryset):

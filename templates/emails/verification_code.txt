@@ -1,9 +1,9 @@
 Assalomu alaykum{% if name %}, {{ name }}{% endif %}!
 
-TopMaster'ga roʻyxatdan oʻtganingiz uchun rahmat.
+TopMaster'ga ro'yxatdan o'tganingiz uchun rahmat.
 Email manzilingizni tasdiqlash kodi: {{ code }}
 
 Kod 15 daqiqa davomida amal qiladi.
-Agar siz roʻyxatdan oʻtmagan boʻlsangiz, ushbu xatni eʼtiborsiz qoldiring.
+Agar siz ro'yxatdan o'tmagan bo'lsangiz, ushbu xatni eʼtiborsiz qoldiring.
 
 — TopMaster

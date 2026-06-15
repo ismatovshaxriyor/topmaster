@@ -82,16 +82,16 @@ MASTERS = [
         "status": AvailabilityStatus.FREE, "verified": True, "top": True, "views": 1248,
         "phone": "+998 90 200 10 10",
         "bio": "8 yillik tajribaga ega malakali elektrik. Uy va ofis simlash, "
-               "rozetka va avtomatlar oʻrnatish.",
+               "rozetka va avtomatlar o'rnatish.",
         "verify": ("approved", {"id": V.VERIFIED, "selfie": V.VERIFIED, "diploma": V.VERIFIED}),
         "skills": [
-            {"title": "Toʻliq simlash", "price_min": 800000, "price_max": 2500000, "years": 8},
+            {"title": "To'liq simlash", "price_min": 800000, "price_max": 2500000, "years": 8},
             {"title": "Rozetka / vyklyuchatel", "price_min": 50000, "price_max": 150000, "years": 8},
             {"title": "Avtomat va shchit", "price_min": 200000, "price_max": 600000, "years": 6},
-            {"title": "Lyustra oʻrnatish", "price_min": 100000, "price_max": 300000, "years": 8},
+            {"title": "Lyustra o'rnatish", "price_min": 100000, "price_max": 300000, "years": 8},
         ],
         "portfolio": [
-            {"title": "Ofis uchun toʻliq simlash", "location": "Toshkent",
+            {"title": "Ofis uchun to'liq simlash", "location": "Toshkent",
              "completed_at": date(2026, 3, 1), "featured": True, "hue": (38, 92, 160)},
             {"title": "Restoran yoritish tizimi", "location": "Toshkent",
              "completed_at": date(2026, 1, 1), "hue": (222, 115, 32)},
@@ -102,7 +102,7 @@ MASTERS = [
         "city": "Toshkent", "exp": 5, "rating": "4.80", "reviews": 64, "min": 80000,
         "status": AvailabilityStatus.BUSY, "verified": True, "top": False, "views": 642,
         "phone": "+998 90 301 20 20",
-        "bio": "Ingliz tili va matematika oʻqituvchisi. IELTS tayyorlov. 5 yil tajriba.",
+        "bio": "Ingliz tili va matematika o'qituvchisi. IELTS tayyorlov. 5 yil tajriba.",
         "verify": ("approved", {"id": V.VERIFIED, "selfie": V.VERIFIED, "diploma": V.VERIFIED}),
         "skills": [
             {"title": "Ingliz tili (IELTS)", "price_min": 200000, "price_max": 400000, "years": 5},
@@ -110,7 +110,7 @@ MASTERS = [
             {"title": "Fizika", "price_min": 100000, "price_max": 180000, "years": 4},
         ],
         "portfolio": [
-            {"title": "IELTS 7.5 — oʻquvchi natijasi", "location": "Toshkent",
+            {"title": "IELTS 7.5 — o'quvchi natijasi", "location": "Toshkent",
              "completed_at": date(2026, 2, 1), "featured": True, "hue": (31, 138, 91)},
         ],
     },
@@ -119,17 +119,17 @@ MASTERS = [
         "city": "Samarqand", "exp": 12, "rating": "5.00", "reviews": 210, "min": 120000,
         "status": AvailabilityStatus.FREE, "verified": True, "top": True, "views": 2103,
         "phone": "+998 91 400 30 30",
-        "bio": "Suv va kanalizatsiya tizimlari boʻyicha mutaxassis. Tezkor va kafolatli xizmat.",
+        "bio": "Suv va kanalizatsiya tizimlari bo'yicha mutaxassis. Tezkor va kafolatli xizmat.",
         "verify": ("approved", {"id": V.VERIFIED, "selfie": V.VERIFIED}),
         "skills": [
             {"title": "Quvur almashtirish", "price_min": 150000, "price_max": 500000, "years": 12},
-            {"title": "Smesitel oʻrnatish", "price_min": 80000, "price_max": 200000, "years": 12},
+            {"title": "Smesitel o'rnatish", "price_min": 80000, "price_max": 200000, "years": 12},
             {"title": "Kanalizatsiya tozalash", "price_min": 120000, "price_max": 300000, "years": 10},
         ],
         "portfolio": [
             {"title": "Kottej suv tizimi", "location": "Samarqand",
              "completed_at": date(2026, 2, 15), "featured": True, "hue": (46, 100, 136)},
-            {"title": "Hammom toʻliq remont", "location": "Samarqand",
+            {"title": "Hammom to'liq remont", "location": "Samarqand",
              "completed_at": date(2025, 11, 10), "hue": (20, 120, 130)},
         ],
     },
@@ -138,7 +138,7 @@ MASTERS = [
         "city": "Toshkent", "exp": 3, "rating": "4.70", "reviews": 38, "min": 200000,
         "status": AvailabilityStatus.FREE, "verified": False, "top": False, "views": 421,
         "phone": "+998 90 505 40 40",
-        "bio": "Kvartira va ofislarni chuqur tozalash. Koʻchganda generalniy uborka.",
+        "bio": "Kvartira va ofislarni chuqur tozalash. Ko'chganda generalniy uborka.",
         "verify": ("pending", {"id": V.UPLOADED, "selfie": V.PENDING}),
         "skills": [
             {"title": "Kvartira tozalash", "price_min": 200000, "price_max": 500000, "years": 3},
@@ -151,16 +151,16 @@ MASTERS = [
         ],
     },
     {
-        "email": "jasur@topmaster.uz", "name": "Jasur Toʻraev", "category": "duradgor",
+        "email": "jasur@topmaster.uz", "name": "Jasur To'raev", "category": "duradgor",
         "city": "Andijon", "exp": 15, "rating": "4.90", "reviews": 156, "min": 300000,
         "status": AvailabilityStatus.BUSY, "verified": True, "top": True, "views": 1789,
         "phone": "+998 93 606 50 50",
         "bio": "Mebel yasash va taʼmirlash. Buyurtma asosida shkaf, eshik, oshxona.",
         "verify": ("approved", {"id": V.VERIFIED, "selfie": V.VERIFIED, "diploma": V.VERIFIED}),
         "skills": [
-            {"title": "Mebel yigʻish", "price_min": 300000, "price_max": 900000, "years": 15},
+            {"title": "Mebel yig'ish", "price_min": 300000, "price_max": 900000, "years": 15},
             {"title": "Shkaf-kupe yasash", "price_min": 1200000, "price_max": 4000000, "years": 15},
-            {"title": "Eshik oʻrnatish", "price_min": 250000, "price_max": 600000, "years": 12},
+            {"title": "Eshik o'rnatish", "price_min": 250000, "price_max": 600000, "years": 12},
         ],
         "portfolio": [
             {"title": "Oshxona mebeli (loyiha asosida)", "location": "Andijon",
@@ -170,14 +170,14 @@ MASTERS = [
         ],
     },
     {
-        "email": "nodira@topmaster.uz", "name": "Nodira Yoʻldosheva", "category": "bo-yoqchi",
+        "email": "nodira@topmaster.uz", "name": "Nodira Yo'ldosheva", "category": "bo-yoqchi",
         "city": "Buxoro", "exp": 6, "rating": "4.60", "reviews": 51, "min": 180000,
         "status": AvailabilityStatus.FREE, "verified": True, "top": False, "views": 588,
         "phone": "+998 91 707 60 60",
-        "bio": "Devor boʻyash, oboi yopishtirish, dekorativ shtukaturka.",
+        "bio": "Devor bo'yash, oboi yopishtirish, dekorativ shtukaturka.",
         "verify": ("approved", {"id": V.VERIFIED, "selfie": V.VERIFIED}),
         "skills": [
-            {"title": "Devor boʻyash", "price_min": 180000, "price_max": 500000, "years": 6},
+            {"title": "Devor bo'yash", "price_min": 180000, "price_max": 500000, "years": 6},
             {"title": "Oboi yopishtirish", "price_min": 120000, "price_max": 350000, "years": 6},
             {"title": "Dekorativ shtukaturka", "price_min": 300000, "price_max": 700000, "years": 4},
         ],
@@ -200,58 +200,58 @@ DEVICES = [
 
 # ── Jobs (open + in_progress + completed + cancelled) ──────────────
 JOBS = [
-    {"slug": "job-101", "client": "bekzod@topmaster.uz", "title": "Uch xonali kvartirani toʻliq simlash kerak",
+    {"slug": "job-101", "client": "bekzod@topmaster.uz", "title": "Uch xonali kvartirani to'liq simlash kerak",
      "category": "elektrik", "city": "Toshkent", "address": "Yunusobod, 4-kvartal",
      "price_type": PriceType.FIXED, "price_amount": 1800000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.OPEN, "image": (38, 92, 160),
-     "description": "Yangi qurilgan 3 xonali kvartirada toʻliq elektr simlash ishlari. "
+     "description": "Yangi qurilgan 3 xonali kvartirada to'liq elektr simlash ishlari. "
                     "Materiallar bizdan. Tajribali usta kerak."},
     {"slug": "job-102", "client": "bekzod@topmaster.uz", "title": "Hammomda suv quvurini almashtirish",
      "category": "santexnik", "city": "Toshkent", "address": "Chilonzor, 19-kvartal",
      "price_type": PriceType.NEGOTIABLE, "price_amount": None, "when_choice": WhenChoice.ASAP,
      "urgent": True, "status": JobStatus.OPEN,
-     "description": "Eski quvurlar oqayapti. Toʻliq almashtirish va yangi smesitel oʻrnatish kerak."},
+     "description": "Eski quvurlar oqayapti. To'liq almashtirish va yangi smesitel o'rnatish kerak."},
     {"slug": "job-103", "client": "malika@topmaster.uz", "title": "Bolaga matematikadan repetitor",
-     "category": "repetitor", "city": "Toshkent", "address": "Mirzo Ulugʻbek tumani",
+     "category": "repetitor", "city": "Toshkent", "address": "Mirzo Ulug'bek tumani",
      "price_type": PriceType.FIXED, "price_amount": 600000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.OPEN,
-     "description": "7-sinf oʻquvchisi uchun haftada 3 marta matematika. Uyga kelib dars berish."},
-    {"slug": "job-104", "client": "oybek@topmaster.uz", "title": "Oshxona mebelini yigʻish",
-     "category": "duradgor", "city": "Samarqand", "address": "Registon koʻchasi",
+     "description": "7-sinf o'quvchisi uchun haftada 3 marta matematika. Uyga kelib dars berish."},
+    {"slug": "job-104", "client": "oybek@topmaster.uz", "title": "Oshxona mebelini yig'ish",
+     "category": "duradgor", "city": "Samarqand", "address": "Registon ko'chasi",
      "price_type": PriceType.FIXED, "price_amount": 900000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.IN_PROGRESS, "assigned": "jasur@topmaster.uz",
-     "description": "IKEA uslubidagi oshxona mebelini yetkazib berilgan, yigʻish va oʻrnatish kerak."},
+     "description": "IKEA uslubidagi oshxona mebelini yetkazib berilgan, yig'ish va o'rnatish kerak."},
     {"slug": "job-105", "client": "malika@topmaster.uz", "title": "Oshxona rozetkalarini almashtirish",
-     "category": "elektrik", "city": "Toshkent", "address": "Yakkasaroy, 2-tor koʻcha",
+     "category": "elektrik", "city": "Toshkent", "address": "Yakkasaroy, 2-tor ko'cha",
      "price_type": PriceType.FIXED, "price_amount": 350000, "when_choice": WhenChoice.TODAY,
      "status": JobStatus.COMPLETED, "assigned": "akmal@topmaster.uz",
      "description": "Oshxonadagi 4 ta rozetkani yangisiga almashtirish kerak."},
     {"slug": "job-106", "client": "oybek@topmaster.uz", "title": "Yotoqxona uchun shkaf-kupe",
-     "category": "duradgor", "city": "Samarqand", "address": "Registon koʻchasi 12",
+     "category": "duradgor", "city": "Samarqand", "address": "Registon ko'chasi 12",
      "price_type": PriceType.FIXED, "price_amount": 2800000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.COMPLETED, "assigned": "jasur@topmaster.uz",
-     "description": "3 metrli shkaf-kupe yasash va oʻrnatish."},
-    {"slug": "job-107", "client": "bekzod@topmaster.uz", "title": "Koʻchishdan oldin generalniy tozalash",
+     "description": "3 metrli shkaf-kupe yasash va o'rnatish."},
+    {"slug": "job-107", "client": "bekzod@topmaster.uz", "title": "Ko'chishdan oldin generalniy tozalash",
      "category": "tozalash", "city": "Toshkent", "address": "Sergeli, 7-kvartal",
      "price_type": PriceType.FIXED, "price_amount": 500000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.CANCELLED,
-     "description": "Koʻchishdan oldin kvartirani chuqur tozalash kerak edi."},
+     "description": "Ko'chishdan oldin kvartirani chuqur tozalash kerak edi."},
     {"slug": "job-hammom", "client": "bekzod@topmaster.uz", "title": "Hammom remonti (yakunlangan)",
      "category": "santexnik", "city": "Toshkent", "address": "Chilonzor, 19-kvartal",
      "price_type": PriceType.FIXED, "price_amount": 1200000, "when_choice": WhenChoice.THIS_WEEK,
      "status": JobStatus.COMPLETED, "assigned": "sardor@topmaster.uz",
-     "description": "Hammomdagi suv quvurlari almashtirildi va yangi smesitel oʻrnatildi."},
+     "description": "Hammomdagi suv quvurlari almashtirildi va yangi smesitel o'rnatildi."},
 ]
 
 # Proposals: (job slug, master email, message, price, status).
 PROPOSALS = [
     ("job-101", "akmal@topmaster.uz", "Tajribali elektrikman, 10 kun ichida bajaraman.", 1750000, "pending"),
-    ("job-102", "sardor@topmaster.uz", "Bugun kelib koʻraman, kafolat bilan ishlayman.", None, "pending"),
+    ("job-102", "sardor@topmaster.uz", "Bugun kelib ko'raman, kafolat bilan ishlayman.", None, "pending"),
     ("job-103", "dilnoza@topmaster.uz", "Matematikadan 5 yillik tajriba. Haftada 3 kun mos.", 600000, "pending"),
-    ("job-104", "jasur@topmaster.uz", "Mebel yigʻishda 15 yillik tajriba. Bir kunda tugataman.", 850000, "accepted"),
+    ("job-104", "jasur@topmaster.uz", "Mebel yig'ishda 15 yillik tajriba. Bir kunda tugataman.", 850000, "accepted"),
     ("job-105", "akmal@topmaster.uz", "Rozetkalarni bugunoq almashtirib beraman.", 320000, "accepted"),
-    ("job-106", "jasur@topmaster.uz", "Shkaf-kupeni oʻlchov olib, 5 kunda tayyorlayman.", 2700000, "accepted"),
-    ("job-hammom", "sardor@topmaster.uz", "Quvurlarni toʻliq almashtiraman, kafolat 1 yil.", 1200000, "accepted"),
+    ("job-106", "jasur@topmaster.uz", "Shkaf-kupeni o'lchov olib, 5 kunda tayyorlayman.", 2700000, "accepted"),
+    ("job-hammom", "sardor@topmaster.uz", "Quvurlarni to'liq almashtiraman, kafolat 1 yil.", 1200000, "accepted"),
 ]
 
 # Reviews on completed jobs: (job slug, author email, master email, rating, text, recommend).
@@ -270,29 +270,29 @@ CLIENT_NOTIFS = [
     ("accepted", "Taklifingiz qabul qilindi", "Hammomda suv quvurini almashtirish", False),
     ("chat", "Sardor Aliyev yozdi", "Ertaga soat 10:00 da kelaman", False),
     ("system", "Profilingiz tasdiqlandi", "TopMaster jamoasi tomonidan tekshirildi", True),
-    ("rejected", "Taklif rad etildi", "Koʻchishdan oldin tozalash — bekor qilindi", True),
+    ("rejected", "Taklif rad etildi", "Ko'chishdan oldin tozalash — bekor qilindi", True),
 ]
 # Notifications for a master (Akmal).
 MASTER_NOTIFS = [
     ("order", "Sizga mos yangi buyurtma", "Uch xonali kvartirani simlash — Yunusobod", False),
     ("accepted", "Taklifingiz qabul qilindi", "Oshxona rozetkalarini almashtirish", True),
-    ("system", "Profilingiz tasdiqlandi ✓", "Hujjatlaringiz tekshiruvdan oʻtdi", True),
+    ("system", "Profilingiz tasdiqlandi ✓", "Hujjatlaringiz tekshiruvdan o'tdi", True),
 ]
 
 # Two chat threads: (client email, master email, job slug, [(who, text), ...]).
 CONVERSATIONS = [
     ("bekzod@topmaster.uz", "sardor@topmaster.uz", "job-102", [
-        ("master", "Assalomu alaykum! Buyurtmangizni koʻrdim."),
+        ("master", "Assalomu alaykum! Buyurtmangizni ko'rdim."),
         ("client", "Vaalaykum assalom! Ha, hammomdagi quvurni almashtirish kerak."),
-        ("master", "Tushunarli. Qachon kelishim mumkin? Bugun yoki ertaga boʻsh man."),
+        ("master", "Tushunarli. Qachon kelishim mumkin? Bugun yoki ertaga bo'sh man."),
         ("system", "Taklif qabul qilindi. Ish boshlandi."),
-        ("client", "Ertaga ertalab qulay. Soat 10 boʻladimi?"),
+        ("client", "Ertaga ertalab qulay. Soat 10 bo'ladimi?"),
         ("master", "Ertaga soat 10:00 da kelaman"),
     ], 2),
     ("bekzod@topmaster.uz", "akmal@topmaster.uz", "job-101", [
-        ("client", "Salom! Kvartirani simlash boʻyicha taklif yubordingizmi?"),
-        ("master", "Ha, yubordim. Materiallarni oʻzingiz olasizmi yoki men olaymi?"),
-        ("client", "Oʻzimiz olamiz. Qachon boshlasak boʻladi?"),
+        ("client", "Salom! Kvartirani simlash bo'yicha taklif yubordingizmi?"),
+        ("master", "Ha, yubordim. Materiallarni o'zingiz olasizmi yoki men olaymi?"),
+        ("client", "O'zimiz olamiz. Qachon boshlasak bo'ladi?"),
     ], 1),
 ]
 
@@ -320,7 +320,7 @@ class Command(BaseCommand):
         self.categories = {c.key: c for c in Category.objects.all()}
         if not self.cities or not self.categories:
             self.stderr.write(self.style.ERROR(
-                "Catalog boʻsh. Avval `seed_catalog` va `seed_support` ishga tushiring."
+                "Catalog bo'sh. Avval `seed_catalog` va `seed_support` ishga tushiring."
             ))
             return
 
@@ -576,12 +576,12 @@ class Command(BaseCommand):
         )
         SupportMessage.objects.create(
             thread=thread, sender=client, is_staff=False,
-            text="Assalomu alaykum, buyurtmam holatini bilsam boʻladimi?",
+            text="Assalomu alaykum, buyurtmam holatini bilsam bo'ladimi?",
         )
         reply = SupportMessage.objects.create(
             thread=thread, sender=staff, is_staff=True,
             text="Vaalaykum assalom! Albatta — buyurtmangiz ustaga biriktirildi, "
-            "tez orada bogʻlanishadi.",
+            "tez orada bog'lanishadi.",
         )
         thread.last_message = reply
         thread.user_unread = 1

@@ -163,7 +163,7 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate_old_password(self, value):
         user = self.context["request"].user
         if not user.check_password(value):
-            raise serializers.ValidationError("Joriy parol notoʻgʻri.")
+            raise serializers.ValidationError("Joriy parol noto'g'ri.")
         return value
 
     def validate_new_password(self, value):
@@ -191,37 +191,36 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 
 
 class PasswordResetConfirmSerializer(serializers.Serializer):
-    """Validate a reset link (uid + token) and set the new password."""
+    """Validate the emailed 6-digit code and set the new password."""
 
-    uid = serializers.CharField()
-    token = serializers.CharField()
+    email = serializers.EmailField()
+    code = serializers.CharField(min_length=6, max_length=6)
     new_password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        from django.contrib.auth.tokens import default_token_generator
-        from django.utils.encoding import force_str
-        from django.utils.http import urlsafe_base64_decode
+        from django.core.cache import cache
 
-        try:
-            pk = force_str(urlsafe_base64_decode(attrs["uid"]))
-            user = User.objects.get(pk=pk, is_active=True)
-        except (User.DoesNotExist, ValueError, TypeError, OverflowError):
-            # Same generic error for bad uid / token — never reveal which.
+        from .tasks import PWD_RESET_CACHE_KEY
+
+        user = User.objects.filter(email__iexact=attrs["email"], is_active=True).first()
+        cached = cache.get(PWD_RESET_CACHE_KEY.format(user.id)) if user else None
+        if user is None or not cached or cached != attrs["code"]:
             raise serializers.ValidationError(
-                {"token": "Havola yaroqsiz yoki muddati oʻtgan."}
-            ) from None
-        if not default_token_generator.check_token(user, attrs["token"]):
-            raise serializers.ValidationError(
-                {"token": "Havola yaroqsiz yoki muddati oʻtgan."}
+                {"code": "Kod noto'g'ri yoki muddati o'tgan."}
             )
         password_validation.validate_password(attrs["new_password"], user)
         attrs["user"] = user
         return attrs
 
     def save(self, **kwargs):
+        from django.core.cache import cache
+
+        from .tasks import PWD_RESET_CACHE_KEY
+
         user = self.validated_data["user"]
         user.set_password(self.validated_data["new_password"])
         user.save(update_fields=["password"])
+        cache.delete(PWD_RESET_CACHE_KEY.format(user.id))
         return user
 
 

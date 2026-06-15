@@ -24,7 +24,7 @@ def register_staff_reply(message):
         notify(
             thread.user,
             type="system",
-            title="Qoʻllab-quvvatlash javob berdi",
+            title="Qo'llab-quvvatlash javob berdi",
             body=(message.text or "Yangi xabar")[:140],
             data={"support_thread_id": thread.id, "message_id": message.id},
         )

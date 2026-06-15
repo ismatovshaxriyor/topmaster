@@ -107,7 +107,7 @@ if LogEntry is not None:
         def resource(self, obj):
             return obj.content_type
 
-        @admin.display(description="Oʻzgargan maydonlar")
+        @admin.display(description="O'zgargan maydonlar")
         def change_summary(self, obj):
             keys = list(_changes(obj).keys())
             if not keys:
@@ -115,7 +115,7 @@ if LogEntry is not None:
             extra = f" +{len(keys) - 3}" if len(keys) > 3 else ""
             return ", ".join(keys[:3]) + extra
 
-        @admin.display(description="Oʻzgarishlar")
+        @admin.display(description="O'zgarishlar")
         def changes_table(self, obj):
             data = _changes(obj)
             pairs = [

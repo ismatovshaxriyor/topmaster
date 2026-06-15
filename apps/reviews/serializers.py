@@ -33,7 +33,7 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
 
         if job.client_id != request.user.id:
             raise serializers.ValidationError(
-                {"job": "Faqat oʻz buyurtmangizga sharh qoldira olasiz."}
+                {"job": "Faqat o'z buyurtmangizga sharh qoldira olasiz."}
             )
         if job.status != JobStatus.COMPLETED:
             raise serializers.ValidationError(

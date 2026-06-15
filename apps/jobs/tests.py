@@ -104,20 +104,20 @@ def test_owner_can_complete_job(client_user, master_user, category, city):
 def test_fulltext_search_q_filters_and_ranks(client_user, category, city):
     Job.objects.create(
         client=client_user, category=category, city=city,
-        title="Konditsioner oʻrnatish", description="Yangi konditsioner oʻrnatish kerak",
+        title="Konditsioner o'rnatish", description="Yangi konditsioner o'rnatish kerak",
         status=JobStatus.OPEN,
     )
     Job.objects.create(
         client=client_user, category=category, city=city,
-        title="Devor boʻyash", description="Xonani boʻyash kerak", status=JobStatus.OPEN,
+        title="Devor bo'yash", description="Xonani bo'yash kerak", status=JobStatus.OPEN,
     )
     api = APIClient()
     api.force_authenticate(client_user)
     resp = api.get("/api/v1/jobs/", {"q": "konditsioner"})
     assert resp.status_code == 200, resp.content
     titles = [j["title"] for j in resp.data["results"]]
-    assert "Konditsioner oʻrnatish" in titles
-    assert "Devor boʻyash" not in titles
+    assert "Konditsioner o'rnatish" in titles
+    assert "Devor bo'yash" not in titles
 
 
 def test_jobs_nearby_search_filters_by_radius(client_user, category):

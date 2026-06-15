@@ -2,13 +2,13 @@
 
 `POST /api/v1/reports/`
 
-| | |
-|---|---|
-| **Bo'lim** | Reports |
-| **Autentifikatsiya** | Bearer JWT |
-| **Ruxsat** | IsAuthenticated |
-| **Sahifalash** | Yo'q |
-| **Throttle** | report: 20/soat |
+|                      |                 |
+| -------------------- | --------------- |
+| **Bo'lim**           | Reports         |
+| **Autentifikatsiya** | Bearer JWT      |
+| **Ruxsat**           | IsAuthenticated |
+| **Sahifalash**       | Yo'q            |
+| **Throttle**         | report: 20/soat |
 
 ## Tavsif
 
@@ -38,12 +38,12 @@ Yo'q.
 
 `Content-Type: application/json`
 
-| Maydon | Tur | Majburiy | Tavsif |
-|---|---|---|---|
-| `target_type` | string | Ha | Shikoyat qilinayotgan obyekt turi. Ruxsat etilgan qiymatlar: `master`, `job`, `review`, `user` |
-| `target_id` | integer | Ha | Shu tur bo'yicha obyekt ID'si (musbat son). Bazada mavjudligi tekshiriladi |
-| `reason` | string | Ha | Shikoyat sababi. Ruxsat etilgan qiymatlar: `spam`, `fraud`, `inappropriate`, `fake`, `abuse`, `other` |
-| `description` | string | Yo'q | Qo'shimcha tavsif; bo'sh string ham qabul qilinadi |
+| Maydon        | Tur     | Majburiy | Tavsif                                                                                                |
+| ------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `target_type` | string  | Ha       | Shikoyat qilinayotgan obyekt turi. Ruxsat etilgan qiymatlar: `master`, `job`, `review`, `user`        |
+| `target_id`   | integer | Ha       | Shu tur bo'yicha obyekt ID'si (musbat son). Bazada mavjudligi tekshiriladi                            |
+| `reason`      | string  | Ha       | Shikoyat sababi. Ruxsat etilgan qiymatlar: `spam`, `fraud`, `inappropriate`, `fake`, `abuse`, `other` |
+| `description` | string  | Yo'q     | Qo'shimcha tavsif; bo'sh string ham qabul qilinadi                                                    |
 
 **Validatsiya qoidalari:**
 
@@ -73,31 +73,31 @@ Yo'q.
 
 **Asosiy javob maydonlari:**
 
-| Maydon | Tavsif |
-|---|---|
-| `id` | Shikoyat ID'si |
-| `target_label` | Shikoyat qilingan obyektning `str()` ko'rinishi; obyekt o'chirilgan bo'lsa `"<model> #<id>"` formatida qaytadi |
-| `reason` | Kiritilgan sabab kodi |
-| `reason_display` | Sababning o'zbek tilidagi to'liq nomi |
-| `status` | Har doim `open` — yangi shikoyatning boshlang'ich holati |
-| `status_display` | Holatning o'zbek tilidagi to'liq nomi |
-| `created_at` | ISO 8601 formatida yaratilgan vaqt |
+| Maydon           | Tavsif                                                                                                         |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| `id`             | Shikoyat ID'si                                                                                                 |
+| `target_label`   | Shikoyat qilingan obyektning `str()` ko'rinishi; obyekt o'chirilgan bo'lsa `"<model> #<id>"` formatida qaytadi |
+| `reason`         | Kiritilgan sabab kodi                                                                                          |
+| `reason_display` | Sababning o'zbek tilidagi to'liq nomi                                                                          |
+| `status`         | Har doim `open` — yangi shikoyatning boshlang'ich holati                                                       |
+| `status_display` | Holatning o'zbek tilidagi to'liq nomi                                                                          |
+| `created_at`     | ISO 8601 formatida yaratilgan vaqt                                                                             |
 
 So'rovdagi `target_type` va `target_id` maydonlari `write_only` — javobda
 qaytmaydi.
 
 ### Xato javoblari
 
-| Kod | Sabab |
-|---|---|
+| Kod   | Sabab                                                                                                                |
+| ----- | -------------------------------------------------------------------------------------------------------------------- |
 | `400` | `target_type` noto'g'ri; `target_id` topilmadi; shu obyektga allaqachon shikoyat qilingan; `reason` noto'g'ri qiymat |
-| `401` | Autentifikatsiya talab qilinadi |
-| `429` | So'rovlar limiti oshib ketdi (20 shikoyat/soat) |
+| `401` | Autentifikatsiya talab qilinadi                                                                                      |
+| `429` | So'rovlar limiti oshib ketdi (20 shikoyat/soat)                                                                      |
 
 **400 xatolariga misollar:**
 
 ```json
-{ "target_type": ["Notoʻgʻri obyekt turi."] }
+{ "target_type": ["Noto'g'ri obyekt turi."] }
 { "target_id": ["Obyekt topilmadi."] }
 { "non_field_errors": ["Siz bu obyekt ustidan allaqachon shikoyat qilgansiz."] }
 { "reason": ["\"invalid_value\" is not a valid choice."] }

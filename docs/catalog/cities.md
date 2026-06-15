@@ -1,41 +1,41 @@
-# Shaharlar roʻyxati
+# Shaharlar ro'yxati
 
 `GET /api/v1/catalog/cities/`
 
-| | |
-|---|---|
-| **Boʻlim** | Catalog |
+|                      |                    |
+| -------------------- | ------------------ |
+| **Bo'lim**           | Catalog            |
 | **Autentifikatsiya** | Ommaviy (AllowAny) |
-| **Ruxsat** | Hamma |
-| **Sahifalash** | Ha |
-| **Throttle** | Yoʻq |
+| **Ruxsat**           | Hamma              |
+| **Sahifalash**       | Ha                 |
+| **Throttle**         | Yo'q               |
 
 ## Tavsif
 
-Platforma xizmat koʻrsatadigan barcha shaharlar (yoki viloyatlar) roʻyxatini
+Platforma xizmat ko'rsatadigan barcha shaharlar (yoki viloyatlar) ro'yxatini
 qaytaradi. Endpoint ochiq — autentifikatsiya talab etilmaydi. Shaharlar
-`order` boʻyicha, soʻngra `name` boʻyicha tartiblangan holda keladi.
+`order` bo'yicha, so'ngra `name` bo'yicha tartiblangan holda keladi.
 
 Har bir shahar `latitude` / `longitude` (markaz koordinatalari) bilan keladi —
-ular shaharlarni xaritada koʻrsatish va "yaqindagi" qidiruvni mijoz tomonida
-qoʻllab-quvvatlash uchun. Koordinatasi kiritilmagan shaharlarda ular `null`
-boʻladi (asosiy shaharlar seed orqali toʻldirilgan).
+ular shaharlarni xaritada ko'rsatish va "yaqindagi" qidiruvni mijoz tomonida
+qo'llab-quvvatlash uchun. Koordinatasi kiritilmagan shaharlarda ular `null`
+bo'ladi (asosiy shaharlar seed orqali to'ldirilgan).
 
-## Soʻrov
+## So'rov
 
 ### Path parametrlari
 
-Yoʻq.
+Yo'q.
 
 ### Query parametrlari
 
-| Parametr | Tur | Majburiy | Tavsif |
-|---|---|---|---|
-| `page` | integer | Yoʻq | Sahifa raqami (standart: 1) |
+| Parametr | Tur     | Majburiy | Tavsif                      |
+| -------- | ------- | -------- | --------------------------- |
+| `page`   | integer | Yo'q     | Sahifa raqami (standart: 1) |
 
 ### Tana (request body)
 
-Yoʻq.
+Yo'q.
 
 ## Javob
 
@@ -65,19 +65,19 @@ Yoʻq.
 }
 ```
 
-| Maydon | Tur | Tavsif |
-|---|---|---|
-| `id` | integer | Shaharga unikal identifikator |
-| `name` | string | Shahar nomi (oʻqish uchun) |
-| `slug` | string | URL-moslashtirilgan nomi (unikal) |
-| `latitude` | number\|null | Markaz kengligi (WGS-84); kiritilmagan boʻlsa `null` |
-| `longitude` | number\|null | Markaz uzunligi (WGS-84); kiritilmagan boʻlsa `null` |
+| Maydon      | Tur          | Tavsif                                               |
+| ----------- | ------------ | ---------------------------------------------------- |
+| `id`        | integer      | Shaharga unikal identifikator                        |
+| `name`      | string       | Shahar nomi (o'qish uchun)                           |
+| `slug`      | string       | URL-moslashtirilgan nomi (unikal)                    |
+| `latitude`  | number\|null | Markaz kengligi (WGS-84); kiritilmagan bo'lsa `null` |
+| `longitude` | number\|null | Markaz uzunligi (WGS-84); kiritilmagan bo'lsa `null` |
 
 ### Xato javoblari
 
-| Kod | Sabab |
-|---|---|
-| `404` | Koʻrsatilgan sahifa mavjud emas |
+| Kod   | Sabab                           |
+| ----- | ------------------------------- |
+| `404` | Ko'rsatilgan sahifa mavjud emas |
 
 ## Misol
 

@@ -64,7 +64,7 @@ class Job(TimeStampedModel):
         max_length=12, choices=PriceType.choices, default=PriceType.FIXED
     )
     price_amount = models.PositiveIntegerField(
-        null=True, blank=True, help_text="Mijoz taklif qilgan byudjet (soʻm) — faqat maʼlumot."
+        null=True, blank=True, help_text="Mijoz taklif qilgan byudjet (so'm) — faqat maʼlumot."
     )
     payment_timing = models.CharField(
         max_length=14, choices=PaymentTiming.choices, blank=True

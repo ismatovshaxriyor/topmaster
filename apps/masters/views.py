@@ -53,7 +53,7 @@ from .serializers import (
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
                 required=False,
-                description="Toʻliq matnli qidiruv (ism, bio, yoʻnalish, koʻnikma boʻyicha).",
+                description="To'liq matnli qidiruv (ism, bio, yo'nalish, ko'nikma bo'yicha).",
             ),
             *nearby_parameters(),
         ]
@@ -222,7 +222,7 @@ class VerificationDocumentView(APIView):
                         ("id", "Pasport / ID karta"),
                         ("selfie", "Selfi tekshiruvi"),
                         ("diploma", "Diplom / Sertifikat"),
-                        ("address", "Manzil tasdigʻi"),
+                        ("address", "Manzil tasdig'i"),
                     ]
                 ),
                 "file": serializers.FileField(),
@@ -236,7 +236,7 @@ class VerificationDocumentView(APIView):
         doc_type = request.data.get("doc_type")
         if doc_type not in VerificationDocument.DocType.values:
             return Response(
-                {"doc_type": "Notoʻgʻri hujjat turi."},
+                {"doc_type": "Noto'g'ri hujjat turi."},
                 status=http_status.HTTP_400_BAD_REQUEST,
             )
         file = request.data.get("file")

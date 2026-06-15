@@ -7,7 +7,7 @@ from apps.common.models import TimeStampedModel
 
 
 class AvailabilityStatus(models.TextChoices):
-    FREE = "free", "Boʻsh"
+    FREE = "free", "Bo'sh"
     BUSY = "busy", "Band"
     OFF = "off", "Faol emas"
 
@@ -35,7 +35,7 @@ class MasterProfile(TimeStampedModel):
     bio = models.TextField(blank=True)
     experience_years = models.PositiveSmallIntegerField(default=0)
     min_price = models.PositiveIntegerField(
-        default=0, help_text="Minimal buyurtma narxi (soʻm)."
+        default=0, help_text="Minimal buyurtma narxi (so'm)."
     )
     status = models.CharField(
         max_length=8, choices=AvailabilityStatus.choices, default=AvailabilityStatus.FREE
@@ -73,7 +73,7 @@ class MasterProfile(TimeStampedModel):
 
 
 class Skill(models.Model):
-    """A specific service the master offers, with a price range (Koʻnikma)."""
+    """A specific service the master offers, with a price range (Ko'nikma)."""
 
     master = models.ForeignKey(
         MasterProfile, on_delete=models.CASCADE, related_name="skills"
@@ -152,7 +152,7 @@ class VerificationDocument(TimeStampedModel):
         ID = "id", "Pasport / ID karta"
         SELFIE = "selfie", "Selfi tekshiruvi"
         DIPLOMA = "diploma", "Diplom / Sertifikat"
-        ADDRESS = "address", "Manzil tasdigʻi"
+        ADDRESS = "address", "Manzil tasdig'i"
 
     class State(models.TextChoices):
         NONE = "none", "Yuklanmagan"

@@ -189,7 +189,7 @@ SIMPLE_JWT = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "TopMaster API",
-    "DESCRIPTION": "TopMaster — Oʻzbekiston xizmatlar marketplace backend API.",
+    "DESCRIPTION": "TopMaster — O'zbekiston xizmatlar marketplace backend API.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,

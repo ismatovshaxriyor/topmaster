@@ -201,21 +201,23 @@ def test_resend_verification_sends_new_code():
     assert len(mail.outbox) == 1  # a fresh code was emailed
 
 
-# ── Password reset ────────────────────────────────────────────────
+# ── Password reset (6-digit code) ─────────────────────────────────
 @pytest.mark.django_db
-def test_password_reset_request_emails_link():
+def test_password_reset_request_emails_code():
     from django.core import mail
+    from django.core.cache import cache
 
-    User.objects.create_user(email="reset@example.com", password="Old!pass123")
+    from apps.accounts.tasks import PWD_RESET_CACHE_KEY
+
+    user = User.objects.create_user(email="reset@example.com", password="Old!pass123")
     client = APIClient()
     resp = client.post(
         reverse("auth-password-reset"), {"email": "reset@example.com"}, format="json"
     )
     assert resp.status_code == 200, resp.content
     assert len(mail.outbox) == 1
-    body = mail.outbox[0].body
-    assert "uid:" in body and "token:" in body
-    assert "reset-password" in body  # the deep link
+    assert "kod" in mail.outbox[0].body.lower()
+    assert cache.get(PWD_RESET_CACHE_KEY.format(user.id)) is not None
 
 
 @pytest.mark.django_db
@@ -233,17 +235,21 @@ def test_password_reset_request_unknown_email_no_leak():
 
 @pytest.mark.django_db
 def test_password_reset_confirm_sets_new_password():
-    from django.contrib.auth.tokens import default_token_generator
-    from django.utils.encoding import force_bytes
-    from django.utils.http import urlsafe_base64_encode
+    from django.core.cache import cache
+
+    from apps.accounts.tasks import PWD_RESET_CACHE_KEY
 
     user = User.objects.create_user(email="conf@example.com", password="Old!pass123")
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    token = default_token_generator.make_token(user)
     client = APIClient()
+    client.post(
+        reverse("auth-password-reset"), {"email": "conf@example.com"}, format="json"
+    )
+    code = cache.get(PWD_RESET_CACHE_KEY.format(user.id))
+    assert code is not None
+
     resp = client.post(
         reverse("auth-password-reset-confirm"),
-        {"uid": uid, "token": token, "new_password": "Brand!new456"},
+        {"email": "conf@example.com", "code": code, "new_password": "Brand!new456"},
         format="json",
     )
     assert resp.status_code == 200, resp.content
@@ -259,19 +265,26 @@ def test_password_reset_confirm_sets_new_password():
 
 
 @pytest.mark.django_db
-def test_password_reset_confirm_rejects_bad_token():
-    from django.utils.encoding import force_bytes
-    from django.utils.http import urlsafe_base64_encode
+def test_password_reset_confirm_rejects_bad_code():
+    from django.core.cache import cache
+
+    from apps.accounts.tasks import PWD_RESET_CACHE_KEY
 
     user = User.objects.create_user(email="bad@example.com", password="Old!pass123")
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
     client = APIClient()
+    client.post(
+        reverse("auth-password-reset"), {"email": "bad@example.com"}, format="json"
+    )
+    real = cache.get(PWD_RESET_CACHE_KEY.format(user.id))
+    bad = "000000" if real != "000000" else "111111"
     resp = client.post(
         reverse("auth-password-reset-confirm"),
-        {"uid": uid, "token": "not-a-valid-token", "new_password": "Brand!new456"},
+        {"email": "bad@example.com", "code": bad, "new_password": "Brand!new456"},
         format="json",
     )
     assert resp.status_code == 400
+    user.refresh_from_db()
+    assert user.check_password("Old!pass123")  # unchanged
     user.refresh_from_db()
     assert user.check_password("Old!pass123")  # unchanged
 

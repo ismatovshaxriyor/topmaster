@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                     models.CharField(
                         choices=[
                             ("open", "Yangi"),
-                            ("reviewing", "Koʻrib chiqilmoqda"),
+                            ("reviewing", "Ko'rib chiqilmoqda"),
                             ("resolved", "Hal qilindi"),
                             ("dismissed", "Rad etildi"),
                         ],

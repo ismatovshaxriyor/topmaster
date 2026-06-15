@@ -9,10 +9,10 @@ from apps.support.models import Faq, FaqTopic
 @pytest.fixture
 def seeded():
     orders = FaqTopic.objects.create(key="orders", label="Buyurtmalar", icon="clipboard-list", order=0)
-    payments = FaqTopic.objects.create(key="payments", label="Toʻlovlar", icon="wallet", order=1)
+    payments = FaqTopic.objects.create(key="payments", label="To'lovlar", icon="wallet", order=1)
     Faq.objects.create(topic=orders, question="Qanday buyurtma beraman?", answer="...", order=0)
     Faq.objects.create(topic=orders, question="Bekor qila olamanmi?", answer="...", order=1)
-    Faq.objects.create(topic=payments, question="Toʻlov usullari?", answer="...", order=0)
+    Faq.objects.create(topic=payments, question="To'lov usullari?", answer="...", order=0)
     return {"orders": orders, "payments": payments}
 
 
