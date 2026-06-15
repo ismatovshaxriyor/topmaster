@@ -34,6 +34,9 @@ for i in $(seq 1 40); do
     sleep 3
 done
 
+echo "→ Reloading nginx (re-resolve the rebuilt web container's IP)..."
+$COMPOSE exec -T nginx nginx -s reload 2>/dev/null || $COMPOSE restart nginx
+
 echo "→ Pruning dangling images..."
 docker image prune -f >/dev/null
 

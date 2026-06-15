@@ -74,3 +74,7 @@ jobs:
           script: |
             cd /opt/topmaster
             ./scripts/deploy.sh
+            # nginx caches the upstream IP; the rebuilt web container gets a new
+            # one, so reload nginx to re-resolve it (avoids a post-deploy 502).
+            docker compose -f docker-compose.prod.yml exec -T nginx nginx -s reload \
+              || docker compose -f docker-compose.prod.yml restart nginx
