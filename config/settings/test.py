@@ -17,6 +17,11 @@ CACHES = {
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
+# Celery runs tasks inline (no Redis broker) — `.delay()` executes synchronously.
+# Keeps the suite runnable anywhere (CI has no Redis service).
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES = False
+
 # Uploads go to a temp filesystem dir, never MinIO.
 USE_S3 = False
 STORAGES = {
