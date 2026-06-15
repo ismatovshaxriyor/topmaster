@@ -159,13 +159,23 @@ def test_verify_email_flow():
     user.refresh_from_db()
     assert user.email_verified is False
 
-    # Correct code → verified.
+    # Correct code → verified + logged in (tokens returned).
     ok = client.post(
         reverse("auth-verify-email"), {"email": "vf@e.uz", "code": code}, format="json"
     )
     assert ok.status_code == 200, ok.content
     user.refresh_from_db()
     assert user.email_verified is True
+
+    body = ok.json()
+    assert "access" in body and "refresh" in body
+    assert body["user"]["id"] == user.id
+    # The returned access token authenticates immediately.
+    auth = APIClient()
+    auth.credentials(HTTP_AUTHORIZATION=f"Bearer {body['access']}")
+    me = auth.get(reverse("auth-me"))
+    assert me.status_code == 200
+    assert me.json()["email_verified"] is True
 
 
 @pytest.mark.django_db

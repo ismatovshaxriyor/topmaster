@@ -236,7 +236,11 @@ class VerifyEmailView(APIView):
 
     @extend_schema(
         request=VerifyEmailSerializer,
-        responses={200: OpenApiResponse(description="Email tasdiqlandi.")},
+        responses={
+            200: OpenApiResponse(
+                description="Email tasdiqlandi; access/refresh tokenlar qaytariladi."
+            )
+        },
     )
     def post(self, request):
         from .tasks import EMAIL_VERIFY_CACHE_KEY
@@ -260,7 +264,18 @@ class VerifyEmailView(APIView):
         user.email_verified = True
         user.save(update_fields=["email_verified"])
         cache.delete(EMAIL_VERIFY_CACHE_KEY.format(user.id))
-        return Response({"detail": "Email muvaffaqiyatli tasdiqlandi."})
+
+        # Log the user straight in — return a JWT pair like /auth/login/ does, so
+        # the client doesn't need a separate login step after verifying.
+        refresh = RefreshToken.for_user(user)
+        return Response(
+            {
+                "detail": "Email muvaffaqiyatli tasdiqlandi.",
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+                "user": UserSummarySerializer(user).data,
+            }
+        )
 
 
 @extend_schema(tags=["Auth & Accounts"])
