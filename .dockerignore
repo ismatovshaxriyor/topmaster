@@ -14,4 +14,10 @@ htmlcov
 staticfiles
 media
 .env.example
+.env.prod.example
 .DS_Store
+
+# Not needed in the image — and deploy/certbot/* is root-owned (certbot),
+# which breaks `docker build` context reads when run as a non-root deploy user.
+deploy/
+.github/
