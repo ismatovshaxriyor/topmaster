@@ -5,7 +5,8 @@ import secrets
 from celery import shared_task
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.core.mail import send_mail
+
+from apps.common.email import send_html_email
 
 logger = logging.getLogger(__name__)
 
@@ -29,15 +30,9 @@ def send_email_verification_code(user_id):
     if user is None or user.email_verified:
         return
     code = issue_email_verification_code(user_id)
-    send_mail(
-        subject="TopMaster: email tasdiqlash kodi",
-        message=(
-            "Assalomu alaykum!\n\n"
-            f"Email manzilingizni tasdiqlash kodi: {code}\n\n"
-            "Kod 15 daqiqa amal qiladi. Agar siz roʻyxatdan oʻtmagan boʻlsangiz, "
-            "ushbu xabarni eʼtiborsiz qoldiring."
-        ),
-        from_email=None,
-        recipient_list=[user.email],
-        fail_silently=False,
+    send_html_email(
+        "TopMaster: email tasdiqlash kodi",
+        user.email,
+        "verification_code",
+        {"code": code, "name": user.full_name},
     )

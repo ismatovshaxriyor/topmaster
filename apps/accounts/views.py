@@ -1,8 +1,9 @@
 """Accounts views: auth, profile, settings, password, devices."""
+import contextlib
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.core.mail import send_mail
 from drf_spectacular.utils import (
     OpenApiResponse,
     extend_schema,
@@ -17,6 +18,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from apps.common.email import send_html_email
 from apps.common.throttles import (
     EmailVerifyRateThrottle,
     LoginRateThrottle,
@@ -174,22 +176,14 @@ class PasswordResetRequestView(APIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
             reset_link = f"{settings.FRONTEND_PASSWORD_RESET_URL}?uid={uid}&token={token}"
-            send_mail(
-                subject="TopMaster: parolni tiklash",
-                message=(
-                    "Assalomu alaykum!\n\n"
-                    "Parolingizni tiklash uchun quyidagi havolani oching:\n"
-                    f"{reset_link}\n\n"
-                    "Yoki ilovaga ushbu maʼlumotlarni kiriting:\n"
-                    f"uid: {uid}\n"
-                    f"token: {token}\n\n"
-                    "Havola cheklangan muddat amal qiladi. Agar bu soʻrovni siz "
-                    "yubormagan boʻlsangiz, xabarni eʼtiborsiz qoldiring."
-                ),
-                from_email=None,
-                recipient_list=[user.email],
-                fail_silently=True,
-            )
+            # Never surface delivery errors to the caller (no account enumeration).
+            with contextlib.suppress(Exception):
+                send_html_email(
+                    "TopMaster: parolni tiklash",
+                    user.email,
+                    "password_reset",
+                    {"reset_link": reset_link, "uid": uid, "token": token},
+                )
         return Response(
             {"detail": "Agar hisob mavjud boʻlsa, koʻrsatmalar yuborildi."}
         )

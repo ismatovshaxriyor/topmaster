@@ -128,10 +128,15 @@ def test_register_sends_verification_code():
     assert resp.status_code == 201, resp.content
     user = User.objects.get(email="v@e.uz")
     assert user.email_verified is False
-    # A code was emailed and cached.
+    # A code was emailed (text + branded HTML) and cached.
     assert len(mail.outbox) == 1
-    assert "kod" in mail.outbox[0].body.lower()
-    assert cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id)) is not None
+    msg = mail.outbox[0]
+    assert "kod" in msg.body.lower()  # plain-text part
+    code = cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id))
+    assert code is not None
+    assert msg.alternatives, "HTML alternative missing"
+    html = msg.alternatives[0][0]
+    assert code in html and "Master" in html  # branded HTML carries the code
 
 
 @pytest.mark.django_db
