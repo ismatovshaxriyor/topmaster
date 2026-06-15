@@ -24,31 +24,41 @@ LIVE="$CONF_DIR/live/$DOMAIN"
 mkdir -p "$LIVE" "$WWW_DIR"
 
 # 1) Temporary self-signed cert so Nginx can start before the real one exists.
+#    (certbot/certbot's entrypoint is `certbot`, so openssl is run on the host;
+#    the container fallback overrides the entrypoint.)
 if [ ! -s "$LIVE/fullchain.pem" ]; then
   echo "→ Creating a temporary self-signed certificate so Nginx can boot..."
-  docker run --rm -v "$(pwd)/deploy/certbot/conf:/etc/letsencrypt" certbot/certbot \
+  if command -v openssl >/dev/null 2>&1; then
     openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
+      -keyout "$LIVE/privkey.pem" \
+      -out "$LIVE/fullchain.pem" \
+      -subj "/CN=$DOMAIN"
+  else
+    docker run --rm -v "$(pwd)/deploy/certbot/conf:/etc/letsencrypt" \
+      --entrypoint openssl certbot/certbot \
+      req -x509 -nodes -newkey rsa:2048 -days 1 \
       -keyout "/etc/letsencrypt/live/$DOMAIN/privkey.pem" \
       -out "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" \
       -subj "/CN=$DOMAIN"
+  fi
 fi
 
-# 2) Start Nginx (serves the ACME challenge over :80).
+# 2) Start Nginx (serves the ACME challenge over :80 with the dummy cert).
 echo "→ Starting Nginx..."
 $COMPOSE up -d nginx
 
-# 3) Replace the dummy cert with a real Let's Encrypt certificate.
+# 3) Drop the dummy cert and request a real one via the webroot challenge.
 echo "→ Requesting the real certificate from Let's Encrypt..."
+rm -rf "$LIVE" "$CONF_DIR/archive/$DOMAIN" "$CONF_DIR/renewal/$DOMAIN.conf"
+
 STAGING_FLAG=""
 [ "$STAGING" = "1" ] && STAGING_FLAG="--staging"
 
 docker run --rm \
   -v "$(pwd)/deploy/certbot/conf:/etc/letsencrypt" \
   -v "$(pwd)/deploy/certbot/www:/var/www/certbot" \
-  certbot/certbot \
-  sh -c "rm -rf /etc/letsencrypt/live/$DOMAIN /etc/letsencrypt/archive/$DOMAIN /etc/letsencrypt/renewal/$DOMAIN.conf; \
-    certbot certonly --webroot -w /var/www/certbot $STAGING_FLAG \
-      -d $DOMAIN --email '$EMAIL' --agree-tos --no-eff-email --non-interactive"
+  certbot/certbot certonly --webroot -w /var/www/certbot $STAGING_FLAG \
+    -d "$DOMAIN" --email "$EMAIL" --agree-tos --no-eff-email --non-interactive
 
 # 4) Reload Nginx so it picks up the real certificate.
 echo "→ Reloading Nginx..."
