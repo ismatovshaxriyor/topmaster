@@ -38,8 +38,9 @@ Umumiy konvensiyalar va har bir fayl formati: [`_TEMPLATE.md`](_TEMPLATE.md).
 
 ## Autentifikatsiya oqimi (qisqacha)
 
-1. `POST /api/v1/auth/register/` — hisob yaratish (`role`: `mijoz` yoki `usta`).
-2. `POST /api/v1/auth/login/` — `access` + `refresh` tokenlarni olish.
-3. Har bir himoyalangan so'rovda: `Authorization: Bearer <access>`.
-4. `POST /api/v1/auth/token/refresh/` — `access`ni yangilash.
-5. `POST /api/v1/auth/logout/` — `refresh`ni bekor qilish (blacklist).
+1. `POST /api/v1/auth/register/` — hisob yaratish (`role`: `mijoz` yoki `usta`); emailga 6 xonali tasdiqlash kodi yuboriladi.
+2. `POST /api/v1/auth/verify-email/` — email + kod → tasdiqlash (+ `access`/`refresh` qaytadi, auto-login). Login tasdiqsiz ham ishlaydi.
+3. `POST /api/v1/auth/login/` — `access` + `refresh` tokenlarni olish.
+4. Har bir himoyalangan so'rovda: `Authorization: Bearer <access>`.
+5. `POST /api/v1/auth/token/refresh/` — `access`ni yangilash.
+6. `POST /api/v1/auth/logout/` — `refresh`ni bekor qilish (blacklist).

@@ -13,7 +13,7 @@
 
 ## Tavsif
 
-Autentifikatsiya qilingan foydalanuvchining o'z profil ma'lumotlarini o'qish (`GET`) yoki qisman yangilash (`PATCH`) uchun ishlatiladi. `MeSerializer` shaxsiy aloqa ma'lumotlarini (email, telefon) ham qaytaradi — `UserSummarySerializer` dan farqli o'laroq. Faqat o'qiladigan maydonlar: `id`, `email`, `role`, `is_verified`, `is_master`.
+Autentifikatsiya qilingan foydalanuvchining o'z profil ma'lumotlarini o'qish (`GET`) yoki qisman yangilash (`PATCH`) uchun ishlatiladi. `MeSerializer` shaxsiy aloqa ma'lumotlarini (email, telefon) ham qaytaradi — `UserSummarySerializer` dan farqli o'laroq. Faqat o'qiladigan maydonlar: `id`, `email`, `role`, `is_verified`, `email_verified`, `is_master`. (`email_verified` — email tasdiqlangan/yo'qligini bildiradi; frontend tasdiqlash so'rovini ko'rsatishi mumkin.)
 
 ## So'rov
 
@@ -34,7 +34,7 @@ Yo'q.
 | `city_id` | integer | Yo'q | `City` ob'ektining `id` si (yozish uchun, o'qishda `city` obyekt ko'rinishida) |
 | `avatar` | file/null | Yo'q | Profil rasmi (multipart/form-data yoki `null` — o'chirish) |
 
-Faqat o'qiladigan maydonlarni (`id`, `email`, `role`, `is_verified`, `is_master`) yuborish e'tiborga olinmaydi.
+Faqat o'qiladigan maydonlarni (`id`, `email`, `role`, `is_verified`, `email_verified`, `is_master`) yuborish e'tiborga olinmaydi.
 
 ## Javob
 
@@ -48,6 +48,7 @@ Faqat o'qiladigan maydonlarni (`id`, `email`, `role`, `is_verified`, `is_master`
   "phone": "+998901234567",
   "role": "usta",
   "is_verified": true,
+  "email_verified": true,
   "avatar": "http://localhost:8000/media/avatars/user_42/foto.jpg",
   "city": {
     "id": 1,
@@ -73,7 +74,7 @@ Faqat o'qiladigan maydonlarni (`id`, `email`, `role`, `is_verified`, `is_master`
 
 | Maydon | Tavsif |
 |---|---|
-| `id`, `email`, `role`, `is_verified`, `is_master` | Faqat o'qiladi — o'zgartirib bo'lmaydi |
+| `id`, `email`, `role`, `is_verified`, `email_verified`, `is_master` | Faqat o'qiladi — o'zgartirib bo'lmaydi |
 | `city` | `CitySerializer` ko'rinishida: `id`, `name` (faqat o'qiladi) |
 | `city_id` | Shaharni o'zgartirish uchun yoziladigan maydon (faqat PATCH) |
 | `has_master_profile` | `true` — `master_profile` bog'langan ustalar uchun |

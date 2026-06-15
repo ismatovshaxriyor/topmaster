@@ -14,6 +14,8 @@
 
 Yangi foydalanuvchi hisobi yaratadi. `role` maydoni `mijoz` (standart) yoki `usta` bo'lishi mumkin. Agar `role=usta` bo'lsa, avtomatik ravishda `MasterProfile`, `VerificationRequest` (holati `none`) va to'rtta `VerificationDocument` (ID, selfie, diploma, manzil) yaratiladi. Javob `UserSummarySerializer` ko'rinishida qaytadi — shaxsiy aloqa ma'lumotlari (email, telefon) kiritilmagan.
 
+**Yon ta'sir:** ro'yxatdan o'tgach foydalanuvchining emailiga **6 xonali tasdiqlash kodi** yuboriladi (async, Celery). Hisob `email_verified=False` bilan yaratiladi — lekin **login bloklanmaydi**. Emailni tasdiqlash uchun [`/auth/verify-email/`](verify-email.md) ga qarang.
+
 ## So'rov
 
 ### Path parametrlari

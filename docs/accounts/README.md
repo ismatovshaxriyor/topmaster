@@ -8,33 +8,38 @@ Bu bo'lim autentifikatsiya, foydalanuvchi profili, sozlamalar, parol boshqaruvi 
 
 | Fayl | Method | Yo'l | Qisqa tavsif |
 |---|---|---|---|
-| [register.md](register.md) | `POST` | `register/` | Yangi hisob yaratish (mijoz yoki usta) |
+| [register.md](register.md) | `POST` | `register/` | Yangi hisob yaratish (+ emailga tasdiqlash kodi) |
+| [verify-email.md](verify-email.md) | `POST` | `verify-email/` | 6 xonali kod bilan emailni tasdiqlash (+ auto-login) |
+| [verify-email-resend.md](verify-email-resend.md) | `POST` | `verify-email/resend/` | Tasdiqlash kodini qayta yuborish |
 | [login.md](login.md) | `POST` | `login/` | Tizimga kirish; `access` + `refresh` + `user` |
 | [token-refresh.md](token-refresh.md) | `POST` | `token/refresh/` | Refresh token orqali yangi access olish |
 | [logout.md](logout.md) | `POST` | `logout/` | Refresh tokenni blacklist qilish |
 | [me.md](me.md) | `GET` `PATCH` | `me/` | O'z profil ma'lumotlarini o'qish/yangilash |
 | [settings.md](settings.md) | `GET` `PATCH` | `settings/` | Bildirishnoma va interfeys sozlamalari |
 | [password-change.md](password-change.md) | `POST` | `password/change/` | Joriy parolni o'zgartirish |
-| [password-reset.md](password-reset.md) | `POST` | `password/reset/` | Parol tiklash havolasini email orqali yuborish |
-| [password-reset-confirm.md](password-reset-confirm.md) | `POST` | `password/reset/confirm/` | uid+token bilan yangi parol o'rnatish |
+| [password-reset.md](password-reset.md) | `POST` | `password/reset/` | Parol tiklash kodini (6 xonali) email orqali yuborish |
+| [password-reset-confirm.md](password-reset-confirm.md) | `POST` | `password/reset/confirm/` | email + kod bilan yangi parol o'rnatish |
 | [devices.md](devices.md) | `GET` `POST` `PUT` `PATCH` `DELETE` | `devices/` | FCM qurilma tokenlarini boshqarish |
 
 ## Umumiy auth oqimi
 
 ```
-1. POST /register/        → hisob yaratiladi, UserSummary qaytadi
-2. POST /login/           → access + refresh tokenlar + UserSummary
-3. Har so'rovda           → Authorization: Bearer <access>
-4. access muddati o'tsa  → POST /token/refresh/ (refresh token bilan)
-5. Chiqishda             → POST /logout/ (refresh tokenni blacklist)
+1. POST /register/        → hisob yaratiladi (UserSummary) + emailga 6 xonali kod
+2. POST /verify-email/    → email+kod → email_verified=True + access/refresh (auto-login)
+   (ixtiyoriy: /verify-email/resend/ — kodni qayta yuborish)
+3. POST /login/           → access + refresh tokenlar + UserSummary
+4. Har so'rovda           → Authorization: Bearer <access>
+5. access muddati o'tsa  → POST /token/refresh/ (refresh token bilan)
+6. Chiqishda             → POST /logout/ (refresh tokenni blacklist)
 ```
+
+> Eslatma: email tasdiqlanmagan bo'lsa ham login ishlaydi (`email_verified` `/me`'da ko'rinadi).
 
 ## Parol tiklash oqimi
 
 ```
-1. POST /password/reset/          → emailga uid + token yuboriladi
-2. Foydalanuvchi emaildagi        → deep-link yoki uid/token qo'lda oladi
-3. POST /password/reset/confirm/  → uid + token + new_password
+1. POST /password/reset/          → emailga 6 xonali kod yuboriladi (15 daqiqa)
+2. POST /password/reset/confirm/  → email + code + new_password
    → muvaffaqiyatda barcha mavjud refresh tokenlar bekor qilinadi
 ```
 
@@ -47,6 +52,7 @@ Bu bo'lim autentifikatsiya, foydalanuvchi profili, sozlamalar, parol boshqaruvi 
 | `login` | 10/min | `POST /login/` |
 | `register` | 5/min | `POST /register/` |
 | `password_reset` | 5/min | `POST /password/reset/` va `POST /password/reset/confirm/` |
+| `email_verify` | 15/min | `POST /verify-email/` va `POST /verify-email/resend/` |
 
 ## JWT sozlamalari
 
