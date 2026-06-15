@@ -224,6 +224,16 @@ GitHub repo → **Settings → Secrets and variables → Actions → New reposit
 | `EC2_SSH_KEY` | **private** kalit (`topmaster_deploy_key`) to'liq matni |
 | `EC2_SSH_PORT` | `22` (ixtiyoriy) |
 
+So'ng **Variables** tabida (Secrets emas) auto-deploy'ni yoqing:
+
+| Variable nomi | Qiymat |
+|---|---|
+| `DEPLOY_ENABLED` | `true` |
+
+> `DEPLOY_ENABLED` o'rnatilmaguncha `deploy` job o'tkazib yuboriladi (skip) —
+> shuning uchun server tayyor bo'lguncha `main` "yashil" qoladi. Tayyor
+> bo'lganda `true` qiling.
+
 ### 10.3. Ishlatish
 
 `main` branch'ga push qiling → Actions test o'tkazadi → muvaffaqiyatli bo'lsa

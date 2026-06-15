@@ -57,7 +57,10 @@ jobs:
   # ── Deploy to EC2 on push to main (after tests pass) ──────────────
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Activates only once the server is ready: set repository variable
+    # DEPLOY_ENABLED=true (Settings → Secrets and variables → Actions → Variables).
+    # Until then this job is skipped, so main stays green.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy over SSH
