@@ -1,6 +1,7 @@
 """Accounts views: auth, profile, settings, password, devices."""
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.core.mail import send_mail
 from drf_spectacular.utils import (
     OpenApiResponse,
@@ -17,6 +18,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.common.throttles import (
+    EmailVerifyRateThrottle,
     LoginRateThrottle,
     PasswordResetRateThrottle,
     RegisterRateThrottle,
@@ -31,8 +33,10 @@ from .serializers import (
     PasswordResetConfirmSerializer,
     PasswordResetRequestSerializer,
     RegisterSerializer,
+    ResendVerificationSerializer,
     UserSettingsSerializer,
     UserSummarySerializer,
+    VerifyEmailSerializer,
 )
 
 User = get_user_model()
@@ -52,6 +56,11 @@ class RegisterView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        # Email a verification code (async; non-blocking). User can still log in
+        # but `email_verified` stays False until they confirm.
+        from .tasks import send_email_verification_code
+
+        send_email_verification_code.delay(user.id)
         return Response(
             UserSummarySerializer(user).data, status=status.HTTP_201_CREATED
         )
@@ -215,6 +224,69 @@ class PasswordResetConfirmView(APIView):
         except Exception:  # blacklist app issues must not block the reset
             pass
         return Response({"detail": "Parol muvaffaqiyatli oʻzgartirildi."})
+
+
+@extend_schema(tags=["Auth & Accounts"])
+class VerifyEmailView(APIView):
+    """Confirm an email with the 6-digit code sent on registration."""
+
+    serializer_class = VerifyEmailSerializer
+    permission_classes = [AllowAny]
+    throttle_classes = [EmailVerifyRateThrottle]
+
+    @extend_schema(
+        request=VerifyEmailSerializer,
+        responses={200: OpenApiResponse(description="Email tasdiqlandi.")},
+    )
+    def post(self, request):
+        from .tasks import EMAIL_VERIFY_CACHE_KEY
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+        code = serializer.validated_data["code"]
+
+        user = User.objects.filter(email__iexact=email, is_active=True).first()
+        if user is not None and user.email_verified:
+            return Response({"detail": "Email allaqachon tasdiqlangan."})
+
+        cached = cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id)) if user else None
+        if user is None or not cached or cached != code:
+            return Response(
+                {"code": "Kod notoʻgʻri yoki muddati oʻtgan."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user.email_verified = True
+        user.save(update_fields=["email_verified"])
+        cache.delete(EMAIL_VERIFY_CACHE_KEY.format(user.id))
+        return Response({"detail": "Email muvaffaqiyatli tasdiqlandi."})
+
+
+@extend_schema(tags=["Auth & Accounts"])
+class ResendVerificationView(APIView):
+    """Resend the email-verification code. Always returns 200 (no leak)."""
+
+    serializer_class = ResendVerificationSerializer
+    permission_classes = [AllowAny]
+    throttle_classes = [EmailVerifyRateThrottle]
+
+    @extend_schema(
+        request=ResendVerificationSerializer,
+        responses={200: OpenApiResponse(description="Kod yuborildi (agar kerak boʻlsa).")},
+    )
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+        user = User.objects.filter(email__iexact=email, is_active=True).first()
+        if user is not None and not user.email_verified:
+            from .tasks import send_email_verification_code
+
+            send_email_verification_code.delay(user.id)
+        return Response(
+            {"detail": "Agar hisob mavjud va tasdiqlanmagan boʻlsa, kod yuborildi."}
+        )
 
 
 @extend_schema(tags=["Auth & Accounts"])

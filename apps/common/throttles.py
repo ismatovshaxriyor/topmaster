@@ -26,6 +26,12 @@ class PasswordResetRateThrottle(AnonRateThrottle):
     scope = "password_reset"
 
 
+class EmailVerifyRateThrottle(AnonRateThrottle):
+    """Limit verify/resend attempts per IP — slows code brute-force + spam."""
+
+    scope = "email_verify"
+
+
 class SupportSendRateThrottle(UserRateThrottle):
     """Limit support-chat messages per user — slows flooding."""
 

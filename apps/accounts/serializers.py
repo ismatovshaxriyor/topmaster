@@ -128,6 +128,7 @@ class MeSerializer(serializers.ModelSerializer):
             "phone",
             "role",
             "is_verified",
+            "email_verified",
             "avatar",
             "city",
             "city_id",
@@ -135,7 +136,14 @@ class MeSerializer(serializers.ModelSerializer):
             "has_master_profile",
             "settings",
         )
-        read_only_fields = ("id", "email", "role", "is_verified", "is_master")
+        read_only_fields = (
+            "id",
+            "email",
+            "role",
+            "is_verified",
+            "email_verified",
+            "is_master",
+        )
 
     def get_has_master_profile(self, obj) -> bool:
         return hasattr(obj, "master_profile")
@@ -167,6 +175,15 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data["new_password"])
         user.save(update_fields=["password"])
         return user
+
+
+class VerifyEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(min_length=6, max_length=6)
+
+
+class ResendVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 
 class PasswordResetRequestSerializer(serializers.Serializer):

@@ -26,6 +26,8 @@ known-first-party = ["apps", "config"]
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings.test"
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
-addopts = "--reuse-db --tb=short"
+# --ds forces test settings even when the container sets DJANGO_SETTINGS_MODULE
+# (env var would otherwise override the ini option above).
+addopts = "--reuse-db --tb=short --ds=config.settings.test"
 testpaths = ["apps"]
 filterwarnings = ["ignore::DeprecationWarning"]

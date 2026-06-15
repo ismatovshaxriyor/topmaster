@@ -172,6 +172,7 @@ REST_FRAMEWORK = {
         "login": "10/min",
         "register": "5/min",
         "password_reset": "5/min",
+        "email_verify": "15/min",
         "support_send": "30/min",
         "report": "20/hour",
     },

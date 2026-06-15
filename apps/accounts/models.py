@@ -40,6 +40,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # is tracked separately in apps.masters.VerificationRequest.
     is_verified = models.BooleanField(default=False)
 
+    # Email ownership confirmed via the post-registration code flow. New sign-ups
+    # start False; the verification code lives in the cache (15-min TTL).
+    email_verified = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)

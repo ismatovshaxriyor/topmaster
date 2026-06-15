@@ -13,7 +13,9 @@ from .views import (
     PasswordResetConfirmView,
     PasswordResetRequestView,
     RegisterView,
+    ResendVerificationView,
     SettingsView,
+    VerifyEmailView,
 )
 
 # SimpleJWT's view is used as-is; tag it so it lands under "Auth & Accounts"
@@ -27,6 +29,12 @@ router.register("devices", DeviceViewSet, basename="device")
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="auth-register"),
+    path("verify-email/", VerifyEmailView.as_view(), name="auth-verify-email"),
+    path(
+        "verify-email/resend/",
+        ResendVerificationView.as_view(),
+        name="auth-verify-email-resend",
+    ),
     path("login/", LoginView.as_view(), name="auth-login"),
     path("token/refresh/", AuthTokenRefreshView.as_view(), name="auth-token-refresh"),
     path("logout/", LogoutView.as_view(), name="auth-logout"),

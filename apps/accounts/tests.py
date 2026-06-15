@@ -111,6 +111,81 @@ def test_patch_settings():
     assert body["theme"] == "dark"
 
 
+# ── Email verification ────────────────────────────────────────────
+@pytest.mark.django_db
+def test_register_sends_verification_code():
+    from django.core import mail
+    from django.core.cache import cache
+
+    from apps.accounts.tasks import EMAIL_VERIFY_CACHE_KEY
+
+    client = APIClient()
+    resp = client.post(
+        reverse("auth-register"),
+        {"email": "v@e.uz", "password": "Str0ngPass!42", "full_name": "V", "role": "mijoz"},
+        format="json",
+    )
+    assert resp.status_code == 201, resp.content
+    user = User.objects.get(email="v@e.uz")
+    assert user.email_verified is False
+    # A code was emailed and cached.
+    assert len(mail.outbox) == 1
+    assert "kod" in mail.outbox[0].body.lower()
+    assert cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id)) is not None
+
+
+@pytest.mark.django_db
+def test_verify_email_flow():
+    from django.core.cache import cache
+
+    from apps.accounts.tasks import EMAIL_VERIFY_CACHE_KEY
+
+    client = APIClient()
+    client.post(
+        reverse("auth-register"),
+        {"email": "vf@e.uz", "password": "Str0ngPass!42", "role": "mijoz"},
+        format="json",
+    )
+    user = User.objects.get(email="vf@e.uz")
+    code = cache.get(EMAIL_VERIFY_CACHE_KEY.format(user.id))
+    assert code is not None
+
+    # Wrong code → 400, still unverified.
+    wrong = "000000" if code != "000000" else "111111"
+    bad = client.post(
+        reverse("auth-verify-email"), {"email": "vf@e.uz", "code": wrong}, format="json"
+    )
+    assert bad.status_code == 400
+    user.refresh_from_db()
+    assert user.email_verified is False
+
+    # Correct code → verified.
+    ok = client.post(
+        reverse("auth-verify-email"), {"email": "vf@e.uz", "code": code}, format="json"
+    )
+    assert ok.status_code == 200, ok.content
+    user.refresh_from_db()
+    assert user.email_verified is True
+
+
+@pytest.mark.django_db
+def test_resend_verification_sends_new_code():
+    from django.core import mail
+
+    client = APIClient()
+    client.post(
+        reverse("auth-register"),
+        {"email": "rs@e.uz", "password": "Str0ngPass!42", "role": "mijoz"},
+        format="json",
+    )
+    mail.outbox.clear()
+    resp = client.post(
+        reverse("auth-verify-email-resend"), {"email": "rs@e.uz"}, format="json"
+    )
+    assert resp.status_code == 200
+    assert len(mail.outbox) == 1  # a fresh code was emailed
+
+
 # ── Password reset ────────────────────────────────────────────────
 @pytest.mark.django_db
 def test_password_reset_request_emails_link():
