@@ -43,7 +43,7 @@ def test_open_creates_conversation_between_two_users():
     bob = make_user("bob@example.com")
     client = auth_client(alice)
 
-    resp = client.post("/api/v1/chat/conversations/open/", {"user": bob.id}, format="json")
+    resp = client.post("/api/v1/chat/conversations/open/", {"user_id": bob.id}, format="json")
     assert resp.status_code == 200
     conv_id = resp.data["id"]
 
@@ -53,7 +53,7 @@ def test_open_creates_conversation_between_two_users():
     assert resp.data["other"]["id"] == bob.id
 
     # Opening again returns the same conversation, not a duplicate.
-    resp2 = client.post("/api/v1/chat/conversations/open/", {"user": bob.id}, format="json")
+    resp2 = client.post("/api/v1/chat/conversations/open/", {"user_id": bob.id}, format="json")
     assert resp2.status_code == 200
     assert resp2.data["id"] == conv_id
     assert Conversation.objects.count() == 1
@@ -63,7 +63,7 @@ def test_open_creates_conversation_between_two_users():
 def test_open_rejects_self():
     alice = make_user("alice@example.com")
     client = auth_client(alice)
-    resp = client.post("/api/v1/chat/conversations/open/", {"user": alice.id}, format="json")
+    resp = client.post("/api/v1/chat/conversations/open/", {"user_id": alice.id}, format="json")
     assert resp.status_code == 400
 
 

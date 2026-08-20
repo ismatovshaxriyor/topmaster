@@ -31,9 +31,9 @@ def seed_catalog(db):
 def test_cities_list_public(api_client, seed_catalog):
     resp = api_client.get(reverse("catalog-city-list"))
     assert resp.status_code == 200
-    # Paginated response: {count, next, previous, results}.
-    assert resp.data["count"] == 2
-    results = resp.data["results"]
+    # Unpaginated: plain list response.
+    results = resp.data
+    assert len(results) == 2
     names = [c["name"] for c in results]
     assert names == ["Toshkent", "Samarqand"]
     assert set(results[0].keys()) == {"id", "name", "slug", "latitude", "longitude"}
@@ -46,7 +46,7 @@ def test_cities_list_public(api_client, seed_catalog):
 def test_categories_list_excludes_inactive(api_client, seed_catalog):
     resp = api_client.get(reverse("catalog-category-list"))
     assert resp.status_code == 200
-    results = resp.data["results"]
+    results = resp.data
     keys = [c["key"] for c in results]
     assert keys == ["elektrik", "santexnik"]
     assert "arxiv" not in keys

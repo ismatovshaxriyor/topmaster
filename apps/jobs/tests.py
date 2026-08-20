@@ -60,11 +60,13 @@ def test_client_can_create_job(client_user, category, city):
     assert job.events.filter(type="created").exists()
 
 
-def test_master_cannot_create_job(master_user, category, city):
+def test_master_can_also_create_job(master_user, category, city):
     api = APIClient()
     api.force_authenticate(master_user)
     resp = api.post("/api/v1/jobs/", _job_payload(category, city), format="json")
-    assert resp.status_code == 403
+    assert resp.status_code == 201, resp.content
+    job = Job.objects.get(id=resp.data["id"])
+    assert job.client == master_user
 
 
 def test_feed_lists_only_open_by_default(client_user, category, city):
