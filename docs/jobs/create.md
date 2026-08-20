@@ -6,13 +6,13 @@
 |---|---|
 | **Bo'lim** | Jobs |
 | **Autentifikatsiya** | Bearer JWT |
-| **Ruxsat** | IsAuthenticated · Rol: mijoz (`user.is_client`) |
+| **Ruxsat** | IsAuthenticated (Mijozlar ham, Ustalar ham) |
 | **Sahifalash** | Yo'q |
 | **Throttle** | user: 1000/min |
 
 ## Tavsif
 
-Yangi buyurtma (ish topshiriq) yaratadi. Faqat `is_client=True` bo'lgan foydalanuvchilar buyurtma joylashi mumkin — usta rolida kirgan foydalanuvchi `403` oladi. Yaratilgandan so'ng avtomatik ravishda `JobEvent(type=created)` yozuvi hosil qilinadi va `notify_matching_masters` Celery vazifasi navbatga qo'yiladi — mos ustalar push/SMS bildirishnoma oladi.
+Yangi buyurtma (ish topshiriq) yaratadi. Barcha tasdiqlangan foydalanuvchilar (shu jumladan ustalar ham) o'zlari uchun buyurtma joylashi mumkin. Yaratilgandan so'ng avtomatik ravishda `JobEvent(type=created)` yozuvi hosil qilinadi va `notify_matching_masters` Celery vazifasi navbatga qo'yiladi — mos ustalar push/SMS bildirishnoma oladi.
 
 **Yon ta'sirlar:**
 - `JobEvent(type="created", actor=foydalanuvchi)` yozuvi yaratiladi.
@@ -80,7 +80,6 @@ Yo'q.
 |---|---|
 | `400` | Majburiy maydon yo'q yoki qiymat noto'g'ri |
 | `401` | Autentifikatsiya talab qilinadi |
-| `403` | Foydalanuvchi mijoz emas (`is_client=False`) |
 | `429` | So'rovlar limitidan oshildi |
 
 ## Misol

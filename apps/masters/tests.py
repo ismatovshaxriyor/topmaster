@@ -42,11 +42,22 @@ def test_master_list_public(client_api, master_profile):
 
 def test_master_detail_public_and_increments_views(client_api, master_profile):
     assert master_profile.views_count == 0
+    # Anonim foydalanuvchi ko'rsa oshishi kerak
     resp = client_api.get(f"/api/v1/masters/{master_profile.id}/")
     assert resp.status_code == 200
     assert resp.data["views_count"] == 1
     master_profile.refresh_from_db()
     assert master_profile.views_count == 1
+
+def test_master_detail_by_owner_does_not_increment_views(client_api, master_user, master_profile):
+    assert master_profile.views_count == 0
+    # Profil egasi o'zi tizimga kirib ko'rsa oshmasligi kerak
+    client_api.force_authenticate(master_user)
+    resp = client_api.get(f"/api/v1/masters/{master_profile.id}/")
+    assert resp.status_code == 200
+    assert resp.data["views_count"] == 0
+    master_profile.refresh_from_db()
+    assert master_profile.views_count == 0
 
 
 def test_me_update_requires_master_role(client_api, client_user):

@@ -78,7 +78,7 @@ class ConversationSerializer(serializers.ModelSerializer):
 class OpenConversationSerializer(serializers.Serializer):
     """Input for opening/creating a 1:1 conversation."""
 
-    user = serializers.IntegerField()
+    user_id = serializers.IntegerField()
     job = serializers.IntegerField(required=False, allow_null=True)
 
 

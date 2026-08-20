@@ -14,6 +14,7 @@ class CityListAPIView(ListAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
     permission_classes = (AllowAny,)
+    pagination_class = None
 
 
 @extend_schema(tags=["Catalog"])
@@ -23,3 +24,4 @@ class CategoryListAPIView(ListAPIView):
     queryset = Category.objects.filter(is_active=True)
     serializer_class = CategorySerializer
     permission_classes = (AllowAny,)
+    pagination_class = None

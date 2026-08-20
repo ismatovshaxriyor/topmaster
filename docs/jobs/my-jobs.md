@@ -12,7 +12,9 @@
 
 ## Tavsif
 
-Joriy autentifikatsiya qilingan foydalanuvchi yaratgan barcha buyurtmalarni qaytaradi. `JobListSerializer` ishlatiladi. Umumiy ro'yxat (`GET /api/v1/jobs/`) dan farqli ravishda, bu endpoint `status` bo'yicha sukut bo'yicha filtrlash qilmaydi — barcha holatlardagi buyurtmalar ko'rsatiladi. `JobFilter` filtrlari va `ordering` parametri shu yerda ham ishlaydi.
+Joriy autentifikatsiya qilingan foydalanuvchi (mijoz yoki usta) o'zi yaratgan (joylagan) barcha buyurtmalarni qaytaradi. `JobListSerializer` ishlatiladi. Umumiy ro'yxat (`GET /api/v1/jobs/`) dan farqli ravishda, bu endpoint `status` bo'yicha sukut bo'yicha filtrlash qilmaydi — barcha holatlardagi buyurtmalar ko'rsatiladi. `JobFilter` filtrlari va `ordering` parametri shu yerda ham ishlaydi.
+
+**Eslatma:** Ustalar o'zlariga ishlash uchun biriktirilgan buyurtmalarni ko'rish maqsadida `assigned_jobs/` endpointidan foydalanishlari kerak.
 
 ## So'rov
 

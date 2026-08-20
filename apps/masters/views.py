@@ -110,10 +110,13 @@ class MasterViewSet(ReadOnlyModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        MasterProfile.objects.filter(pk=instance.pk).update(
-            views_count=F("views_count") + 1
-        )
-        instance.refresh_from_db(fields=["views_count"])
+        # Agar foydalanuvchi tizimga kirgan bo'lsa va bu uning shaxsiy profili bo'lsa, views_count oshirilmaydi
+        is_owner = request.user.is_authenticated and request.user.id == instance.user_id
+        if not is_owner:
+            MasterProfile.objects.filter(pk=instance.pk).update(
+                views_count=F("views_count") + 1
+            )
+            instance.refresh_from_db(fields=["views_count"])
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 

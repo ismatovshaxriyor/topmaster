@@ -54,7 +54,7 @@ class ConversationViewSet(viewsets.ReadOnlyModelViewSet):
     def open(self, request):
         ser = OpenConversationSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
-        other_id = ser.validated_data["user"]
+        other_id = ser.validated_data["user_id"]
         job_id = ser.validated_data.get("job")
 
         if other_id == request.user.id:

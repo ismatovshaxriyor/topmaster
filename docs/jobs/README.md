@@ -12,11 +12,12 @@ Mijozlar (clients) tomonidan joylanadigan ish topshiriqlari (buyurtmalar). Har b
 | Metod | URL | Tavsif | Fayl |
 |---|---|---|---|
 | `GET` | `/api/v1/jobs/` | Ochiq buyurtmalar taxtasi (sahifalangan, filtrlanadi) | [list.md](list.md) |
-| `POST` | `/api/v1/jobs/` | Yangi buyurtma yaratish (faqat mijoz) | [create.md](create.md) |
+| `POST` | `/api/v1/jobs/` | Yangi buyurtma yaratish | [create.md](create.md) |
 | `GET` | `/api/v1/jobs/{id}/` | Bitta buyurtma tafsilotlari (rasmlar, voqealar, usta) | [detail.md](detail.md) |
 | `PATCH` | `/api/v1/jobs/{id}/` | Buyurtma maydonlarini yangilash (faqat egasi) | [update.md](update.md) |
 | `DELETE` | `/api/v1/jobs/{id}/` | Buyurtmani o'chirish (faqat egasi) | [delete.md](delete.md) |
-| `GET` | `/api/v1/jobs/my_jobs/` | Joriy foydalanuvchining barcha buyurtmalari | [my-jobs.md](my-jobs.md) |
+| `GET` | `/api/v1/jobs/my_jobs/` | Joriy foydalanuvchining joylagan buyurtmalari | [my-jobs.md](my-jobs.md) |
+| `GET` | `/api/v1/jobs/assigned_jobs/` | Joriy ustaga biriktirilgan buyurtmalar | [assigned-jobs.md](assigned-jobs.md) |
 | `POST` | `/api/v1/jobs/{id}/images/` | Buyurtmaga rasm biriktirish (faqat egasi) | [images.md](images.md) |
 | `POST` | `/api/v1/jobs/{id}/mark_awaiting/` | Usta ishni yakunlab, tasdiqlashga yuboradi | [mark-awaiting.md](mark-awaiting.md) |
 | `POST` | `/api/v1/jobs/{id}/complete/` | Mijoz ishni qabul qiladi va yakunlaydi | [complete.md](complete.md) |

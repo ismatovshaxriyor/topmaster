@@ -95,8 +95,6 @@ class JobViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        if not user.is_client:
-            raise PermissionDenied("Faqat mijozlar buyurtma joylashi mumkin.")
         job = serializer.save(client=user)
         JobEvent.objects.create(job=job, type=JobEvent.EventType.CREATED, actor=user)
         from .tasks import notify_matching_masters
@@ -126,6 +124,22 @@ class JobViewSet(viewsets.ModelViewSet):
         """Jobs created by the current user."""
         qs = self.filter_queryset(
             self.get_queryset().filter(client=request.user)
+        )
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = JobListSerializer(page, many=True, context=self.get_serializer_context())
+            return self.get_paginated_response(serializer.data)
+        serializer = JobListSerializer(qs, many=True, context=self.get_serializer_context())
+        return Response(serializer.data)
+
+    @extend_schema(responses=JobListSerializer(many=True))
+    @action(detail=False, methods=["get"])
+    def assigned_jobs(self, request):
+        """Jobs assigned to the current master."""
+        if not request.user.is_master:
+            raise PermissionDenied("Faqat ustalar uchun.")
+        qs = self.filter_queryset(
+            self.get_queryset().filter(assigned_master__user=request.user)
         )
         page = self.paginate_queryset(qs)
         if page is not None:
