@@ -22,6 +22,10 @@ firebase-credentials.json
 deploy/certbot/conf/
 deploy/certbot/www/
 
+# Deploy: server-specific override (e.g. shared VPS using host-level Nginx
+# instead of the bundled nginx/certbot containers) — not portable, per-host.
+docker-compose.prod.override.yml
+
 # Tooling
 .pytest_cache/
 .ruff_cache/

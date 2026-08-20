@@ -11,12 +11,23 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 COMPOSE="docker compose -f docker-compose.prod.yml"
+SERVICES="db redis minio minio-init web celery_worker celery_beat"
+
+# On hosts where 80/443 are already owned by a host-level Nginx (shared VPS
+# with other sites), docker-compose.prod.override.yml binds web/minio to
+# 127.0.0.1:<port> instead, and the bundled nginx/certbot containers are
+# skipped entirely — the host's own Nginx + certbot handle TLS instead.
+if [ -f docker-compose.prod.override.yml ]; then
+    COMPOSE="$COMPOSE -f docker-compose.prod.override.yml"
+else
+    SERVICES="$SERVICES nginx certbot"
+fi
 
 echo "→ Pulling latest code..."
 git pull --ff-only
 
 echo "→ Building and starting containers..."
-$COMPOSE up -d --build --remove-orphans
+$COMPOSE up -d --build --remove-orphans $SERVICES
 
 echo "→ Waiting for the web container to become healthy..."
 cid="$($COMPOSE ps -q web)"
@@ -35,7 +46,11 @@ for i in $(seq 1 40); do
 done
 
 echo "→ Reloading nginx (re-resolve the rebuilt web container's IP)..."
-$COMPOSE exec -T nginx nginx -s reload 2>/dev/null || $COMPOSE restart nginx
+if $COMPOSE config --services | grep -qx nginx; then
+    $COMPOSE exec -T nginx nginx -s reload 2>/dev/null || $COMPOSE restart nginx
+elif command -v nginx >/dev/null 2>&1; then
+    nginx -t && nginx -s reload
+fi
 
 echo "→ Pruning dangling images..."
 docker image prune -f >/dev/null
